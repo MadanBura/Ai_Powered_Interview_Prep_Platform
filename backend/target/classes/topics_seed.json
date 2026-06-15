@@ -1,0 +1,2758 @@
+[
+  {
+    "tech": "Android",
+    "level": "Fresher",
+    "title": "Activity Lifecycle",
+    "subtopics": [
+      "onCreate",
+      "onStart",
+      "onResume",
+      "onPause",
+      "onStop",
+      "onDestroy",
+      "configuration changes"
+    ],
+    "codeSnippet": "override fun onCreate(savedInstanceState: Bundle?) {\n    super.onCreate(savedInstanceState)\n    setContentView(R.layout.activity_main)\n}",
+    "pros": [
+      "Full control over UI lifecycle",
+      "Predictable state transitions"
+    ],
+    "cons": [
+      "Complex rotation handling",
+      "Memory leaks if context held too long"
+    ],
+    "useCases": [
+      "Login screen persisting user input on rotation",
+      "Saving game state when app backgrounded"
+    ],
+    "tags": [
+      "lifecycle",
+      "activity",
+      "android-basics"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Fresher",
+    "title": "Intents & Navigation",
+    "subtopics": [
+      "Explicit intent",
+      "Implicit intent",
+      "Intent flags",
+      "putExtra/getExtra",
+      "startActivity"
+    ],
+    "codeSnippet": "val intent = Intent(this, DetailActivity::class.java)\nintent.putExtra(\"id\", userId)\nstartActivity(intent)",
+    "pros": [
+      "Decoupled component communication",
+      "Supports deep linking"
+    ],
+    "cons": [
+      "Type-unsafe extras",
+      "No result handling without contracts"
+    ],
+    "useCases": [
+      "Sharing content to WhatsApp",
+      "Opening camera from app",
+      "Payment gateway redirect"
+    ],
+    "tags": [
+      "intent",
+      "navigation",
+      "android-basics"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Fresher",
+    "title": "RecyclerView Basics",
+    "subtopics": [
+      "ViewHolder pattern",
+      "Adapter",
+      "LayoutManager",
+      "DiffUtil",
+      "Item decorations"
+    ],
+    "codeSnippet": "class MyAdapter : RecyclerView.Adapter<MyViewHolder>() {\n    override fun onCreateViewHolder(...) = MyViewHolder(...)\n    override fun onBindViewHolder(holder, pos) { holder.bind(items[pos]) }\n    override fun getItemCount() = items.size\n}",
+    "pros": [
+      "Efficient view recycling",
+      "Flexible layout managers"
+    ],
+    "cons": [
+      "Boilerplate adapter code",
+      "Manual DiffUtil setup"
+    ],
+    "useCases": [
+      "Social feed list",
+      "Product catalog",
+      "Chat message list"
+    ],
+    "tags": [
+      "recyclerview",
+      "list",
+      "performance"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Fresher",
+    "title": "Layouts & XML",
+    "subtopics": [
+      "ConstraintLayout",
+      "LinearLayout",
+      "RelativeLayout",
+      "ViewBinding",
+      "inflation"
+    ],
+    "codeSnippet": "val binding = ActivityMainBinding.inflate(layoutInflater)\nsetContentView(binding.root)\nbinding.textView.text = \"Hello\"",
+    "pros": [
+      "Declarative UI structure",
+      "ViewBinding eliminates findViewById"
+    ],
+    "cons": [
+      "XML verbosity",
+      "No preview of dynamic data",
+      "Slow builds for large layouts"
+    ],
+    "useCases": [
+      "Login form",
+      "Product detail screen",
+      "Settings screen"
+    ],
+    "tags": [
+      "layout",
+      "xml",
+      "viewbinding"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Junior",
+    "title": "Fragment Management",
+    "subtopics": [
+      "FragmentManager",
+      "FragmentTransaction",
+      "BackStack",
+      "Fragment lifecycle",
+      "ViewPager2"
+    ],
+    "codeSnippet": "supportFragmentManager.beginTransaction()\n    .replace(R.id.container, MyFragment())\n    .addToBackStack(null)\n    .commit()",
+    "pros": [
+      "Modular UI",
+      "Reusable across activities",
+      "Tablet/phone layouts"
+    ],
+    "cons": [
+      "Complex lifecycle coupling with Activity",
+      "State loss on config changes"
+    ],
+    "useCases": [
+      "Bottom navigation tabs",
+      "Wizard step screens",
+      "Master-detail layouts"
+    ],
+    "tags": [
+      "fragment",
+      "navigation",
+      "modular-ui"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Junior",
+    "title": "Room Database",
+    "subtopics": [
+      "Entity",
+      "DAO",
+      "Database",
+      "TypeConverters",
+      "Flow/LiveData queries"
+    ],
+    "codeSnippet": "@Dao interface UserDao {\n    @Query(\"SELECT * FROM users\") fun getAll(): Flow<List<User>>\n    @Insert suspend fun insert(user: User)\n    @Delete suspend fun delete(user: User)\n}",
+    "pros": [
+      "Compile-time SQL verification",
+      "Coroutine/Flow support",
+      "Migration support"
+    ],
+    "cons": [
+      "Schema migrations are boilerplate",
+      "No built-in encryption",
+      "ORM overhead"
+    ],
+    "useCases": [
+      "Offline-first news app",
+      "Caching API responses",
+      "Shopping cart persistence"
+    ],
+    "tags": [
+      "room",
+      "database",
+      "offline",
+      "dao"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Junior",
+    "title": "Retrofit & API Calls",
+    "subtopics": [
+      "Service interface",
+      "@GET/@POST/@PUT/@DELETE",
+      "Call/suspend",
+      "Converters",
+      "Interceptors"
+    ],
+    "codeSnippet": "interface ApiService {\n    @GET(\"users/{id}\")\n    suspend fun getUser(@Path(\"id\") id: String): Response<User>\n}",
+    "pros": [
+      "Type-safe HTTP calls",
+      "Coroutine support",
+      "Easy mock testing"
+    ],
+    "cons": [
+      "No built-in caching",
+      "Error handling boilerplate"
+    ],
+    "useCases": [
+      "Fetching user profile",
+      "Submitting form data",
+      "Refreshing news feed"
+    ],
+    "tags": [
+      "retrofit",
+      "networking",
+      "api"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Junior",
+    "title": "Coroutines Basics",
+    "subtopics": [
+      "suspend fun",
+      "CoroutineScope",
+      "launch",
+      "async/await",
+      "Dispatchers",
+      "Job"
+    ],
+    "codeSnippet": "viewModelScope.launch {\n    val result = withContext(Dispatchers.IO) {\n        repository.fetchData()\n    }\n    _uiState.value = result\n}",
+    "pros": [
+      "Non-blocking async code",
+      "Structured concurrency",
+      "Cancellation support"
+    ],
+    "cons": [
+      "Steep learning curve",
+      "Debugging complexity",
+      "Misuse of GlobalScope"
+    ],
+    "useCases": [
+      "Background file download",
+      "Parallel API calls",
+      "Database writes off main thread"
+    ],
+    "tags": [
+      "coroutines",
+      "async",
+      "concurrency"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Mid-Level",
+    "title": "MVVM + Clean Architecture",
+    "subtopics": [
+      "ViewModel",
+      "LiveData/StateFlow",
+      "Repository",
+      "UseCase",
+      "DataSource",
+      "Separation of concerns"
+    ],
+    "codeSnippet": "class GetUserUseCase(private val repo: UserRepository) {\n    suspend operator fun invoke(id: String) = repo.getUser(id)\n}\n\nclass UserViewModel(private val getUser: GetUserUseCase) : ViewModel() {\n    private val _state = MutableStateFlow<UiState>(Loading)\n    val state = _state.asStateFlow()\n    fun load(id: String) { viewModelScope.launch { _state.value = Success(getUser(id)) } }\n}",
+    "pros": [
+      "Testable",
+      "Separation of concerns",
+      "Scalable",
+      "Independent layers"
+    ],
+    "cons": [
+      "Over-engineering for small apps",
+      "Lots of boilerplate files"
+    ],
+    "useCases": [
+      "Large banking app",
+      "E-commerce product module",
+      "Social feed with offline support"
+    ],
+    "tags": [
+      "mvvm",
+      "clean-architecture",
+      "viewmodel",
+      "usecase"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Mid-Level",
+    "title": "Hilt Dependency Injection",
+    "subtopics": [
+      "@HiltAndroidApp",
+      "@Inject",
+      "@Module",
+      "@Provides",
+      "@Binds",
+      "Scopes: @Singleton @ViewModelScoped"
+    ],
+    "codeSnippet": "@Module @InstallIn(SingletonComponent::class)\nobject NetworkModule {\n    @Provides @Singleton\n    fun provideRetrofit(): Retrofit = Retrofit.Builder().baseUrl(BASE_URL).build()\n}",
+    "pros": [
+      "Compile-time DI validation",
+      "Removes manual DI wiring",
+      "Scope management"
+    ],
+    "cons": [
+      "Annotation processing increases build time",
+      "Hard to debug DI graph"
+    ],
+    "useCases": [
+      "Injecting ApiService into Repository",
+      "Providing Room DB as singleton",
+      "ViewModel factory injection"
+    ],
+    "tags": [
+      "hilt",
+      "di",
+      "dependency-injection"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Mid-Level",
+    "title": "Jetpack Compose Intermediate",
+    "subtopics": [
+      "State hoisting",
+      "Side effects (LaunchedEffect,SideEffect)",
+      "Recomposition",
+      "CompositionLocal",
+      "Custom layouts"
+    ],
+    "codeSnippet": "@Composable fun Counter() {\n    var count by remember { mutableStateOf(0) }\n    Column {\n        Text(\"Count: $count\")\n        Button(onClick = { count++ }) { Text(\"Increment\") }\n    }\n}",
+    "pros": [
+      "Declarative UI",
+      "Less boilerplate than XML",
+      "Easy animation",
+      "Preview support"
+    ],
+    "cons": [
+      "Recomposition pitfalls",
+      "Interop with Views is complex",
+      "Learning curve"
+    ],
+    "useCases": [
+      "Dynamic form builder",
+      "Animated onboarding",
+      "Real-time chat UI"
+    ],
+    "tags": [
+      "compose",
+      "ui",
+      "state-management"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Mid-Level",
+    "title": "Paging 3",
+    "subtopics": [
+      "PagingSource",
+      "PagingData",
+      "Pager",
+      "PagingDataAdapter",
+      "RemoteMediator"
+    ],
+    "codeSnippet": "class ItemPagingSource(private val api: ApiService) : PagingSource<Int, Item>() {\n    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Item> {\n        val page = params.key ?: 1\n        val response = api.getItems(page)\n        return LoadResult.Page(response.items, null, page + 1)\n    }\n}",
+    "pros": [
+      "Built-in load state handling",
+      "Offline support via RemoteMediator",
+      "Efficient memory use"
+    ],
+    "cons": [
+      "Complex setup",
+      "Debugging load states",
+      "Requires Kotlin coroutines"
+    ],
+    "useCases": [
+      "Infinite scroll product list",
+      "News feed",
+      "Search results pagination"
+    ],
+    "tags": [
+      "paging",
+      "recyclerview",
+      "performance"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Senior",
+    "title": "Performance Optimization",
+    "subtopics": [
+      "StrictMode",
+      "Profiler",
+      "Memory leaks (LeakCanary)",
+      "Baseline Profiles",
+      "Render performance (16ms budget)",
+      "App startup time"
+    ],
+    "codeSnippet": "StrictMode.setThreadPolicy(\n    StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build()\n)",
+    "pros": [
+      "Better UX",
+      "Lower crash rates",
+      "Higher Play Store ratings"
+    ],
+    "cons": [
+      "Time-intensive to profile",
+      "Platform fragmentation"
+    ],
+    "useCases": [
+      "Reducing app cold start from 4s to 1.2s",
+      "Fixing OOM crash in image-heavy feed",
+      "Eliminating jank in RecyclerView"
+    ],
+    "tags": [
+      "performance",
+      "profiler",
+      "optimization",
+      "memory"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Senior",
+    "title": "Modularization",
+    "subtopics": [
+      "Feature modules",
+      "Dynamic delivery",
+      "Dependency graph between modules",
+      "API/impl split",
+      "Build speed benefits"
+    ],
+    "codeSnippet": "// settings.gradle\ninclude ':app', ':feature-home', ':feature-interview', ':core-network', ':core-ui'",
+    "pros": [
+      "Parallel builds",
+      "Independent feature development",
+      "Reduced APK size with dynamic delivery"
+    ],
+    "cons": [
+      "Complex Gradle setup",
+      "Module boundary discipline overhead",
+      "Shared state challenges"
+    ],
+    "useCases": [
+      "Large app split into feature teams",
+      "On-demand feature download",
+      "Reducing build time by 40%"
+    ],
+    "tags": [
+      "modularization",
+      "gradle",
+      "scalability"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Senior",
+    "title": "Security Best Practices",
+    "subtopics": [
+      "Certificate pinning",
+      "EncryptedSharedPreferences",
+      "ProGuard/R8",
+      "Keystore API",
+      "Root detection",
+      "Biometric auth"
+    ],
+    "codeSnippet": "val encryptedPrefs = EncryptedSharedPreferences.create(\n    context, \"secure_prefs\",\n    MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),\n    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,\n    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM\n)",
+    "pros": [
+      "Protects user data",
+      "Prevents MITM attacks",
+      "App hardening"
+    ],
+    "cons": [
+      "Certificate pinning breaks on server cert rotation",
+      "Biometric not universally available"
+    ],
+    "useCases": [
+      "Banking app secure token storage",
+      "Health app HIPAA compliance",
+      "Payment app biometric login"
+    ],
+    "tags": [
+      "security",
+      "encryption",
+      "biometric"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Lead",
+    "title": "Android Architecture at Scale",
+    "subtopics": [
+      "Multi-repo vs mono-repo",
+      "Convention plugins",
+      "Version catalogs",
+      "Shared build logic",
+      "CI/CD for Android"
+    ],
+    "codeSnippet": "class AndroidLibraryPlugin : Plugin<Project> {\n    override fun apply(target: Project) {\n        target.extensions.configure<LibraryExtension> {\n            compileSdk = 35\n        }\n    }\n}",
+    "pros": [
+      "Consistent builds across teams",
+      "Faster onboarding",
+      "Reduced Gradle duplication"
+    ],
+    "cons": [
+      "High initial setup cost",
+      "Requires strong Gradle expertise"
+    ],
+    "useCases": [
+      "50-module Android app at a fintech",
+      "Enforcing Kotlin version org-wide",
+      "CI pipeline producing signed APKs"
+    ],
+    "tags": [
+      "architecture",
+      "gradle",
+      "lead",
+      "ci-cd"
+    ]
+  },
+  {
+    "tech": "Android",
+    "level": "Lead",
+    "title": "Technical Roadmap Planning",
+    "subtopics": [
+      "Tech debt backlog",
+      "Deprecation planning",
+      "SDK upgrade strategy",
+      "Team skill matrix",
+      "OKR alignment"
+    ],
+    "codeSnippet": "// Q1: Migrate to Compose\n// Q2: Modularize features\n// Q3: Baseline profiles rollout\n// Q4: Dynamic delivery",
+    "pros": [
+      "Alignment with business goals",
+      "Predictable delivery",
+      "Reduced surprise incidents"
+    ],
+    "cons": [
+      "Roadmaps become stale",
+      "Estimation uncertainty",
+      "Cross-team dependencies"
+    ],
+    "useCases": [
+      "Planning Compose migration without breaking releases",
+      "Deprecating legacy SDK in 3 sprints",
+      "Aligning Android roadmap with backend API versioning"
+    ],
+    "tags": [
+      "roadmap",
+      "planning",
+      "leadership",
+      "strategy"
+    ]
+  },
+  {
+    "tech": "Kotlin",
+    "level": "Fresher",
+    "title": "Kotlin Basics & Null Safety",
+    "subtopics": [
+      "val/var",
+      "Type inference",
+      "Nullable types",
+      "Elvis operator",
+      "Safe call (?.)",
+      "!! operator"
+    ],
+    "codeSnippet": "val name: String? = null\nval length = name?.length ?: 0",
+    "pros": [
+      "Eliminates NullPointerException at compile time",
+      "Concise syntax"
+    ],
+    "cons": [
+      "!! is still unsafe",
+      "Java interop nullability leakage"
+    ],
+    "useCases": [
+      "API response nullable field handling",
+      "Optional user profile fields"
+    ],
+    "tags": [
+      "kotlin",
+      "null-safety",
+      "basics"
+    ]
+  },
+  {
+    "tech": "Kotlin",
+    "level": "Fresher",
+    "title": "Data Classes & Collections",
+    "subtopics": [
+      "data class",
+      "copy()",
+      "componentN()",
+      "List/Map/Set",
+      "filter/map/reduce",
+      "extension functions"
+    ],
+    "codeSnippet": "data class User(val id: String, val name: String)\nval seniors = users.filter { it.age > 5 }.map { it.name }",
+    "pros": [
+      "Boilerplate-free POJOs",
+      "Powerful collection APIs"
+    ],
+    "cons": [
+      "data class inheritance limitations",
+      "Performance on large collections"
+    ],
+    "useCases": [
+      "DTO mapping",
+      "Filtering search results",
+      "Grouping orders by status"
+    ],
+    "tags": [
+      "kotlin",
+      "data-class",
+      "collections"
+    ]
+  },
+  {
+    "tech": "Kotlin",
+    "level": "Fresher",
+    "title": "Functions & Lambdas",
+    "subtopics": [
+      "Higher-order functions",
+      "Lambda syntax",
+      "Trailing lambda",
+      "inline fun",
+      "it keyword"
+    ],
+    "codeSnippet": "fun operate(x: Int, y: Int, op: (Int, Int) -> Int) = op(x, y)\nval sum = operate(3, 4) { a, b -> a + b }",
+    "pros": [
+      "Functional style",
+      "Reduces boilerplate",
+      "Composable logic"
+    ],
+    "cons": [
+      "Debugging lambda stack traces",
+      "Overuse harms readability"
+    ],
+    "useCases": [
+      "Click listeners",
+      "Callback chaining",
+      "Custom DSL builders"
+    ],
+    "tags": [
+      "kotlin",
+      "lambda",
+      "functional"
+    ]
+  },
+  {
+    "tech": "Kotlin",
+    "level": "Junior",
+    "title": "Coroutines & Flow",
+    "subtopics": [
+      "suspend fun",
+      "Flow",
+      "StateFlow",
+      "SharedFlow",
+      "collect",
+      "emit",
+      "flowOn",
+      "catch"
+    ],
+    "codeSnippet": "flow {\n    emit(fetchFromNetwork())\n}.flowOn(Dispatchers.IO).catch { emit(CachedData) }.collect { render(it) }",
+    "pros": [
+      "Backpressure handling",
+      "Cold vs hot streams",
+      "Structured cancellation"
+    ],
+    "cons": [
+      "Complexity for beginners",
+      "StateFlow vs SharedFlow confusion"
+    ],
+    "useCases": [
+      "Live search with debounce",
+      "Real-time score updates",
+      "Sensor data streaming"
+    ],
+    "tags": [
+      "kotlin",
+      "flow",
+      "coroutines",
+      "reactive"
+    ]
+  },
+  {
+    "tech": "Kotlin",
+    "level": "Junior",
+    "title": "Sealed Classes & When",
+    "subtopics": [
+      "sealed class",
+      "when expression",
+      "exhaustive checks",
+      "Result type",
+      "Either pattern"
+    ],
+    "codeSnippet": "sealed class Result<out T> {\n    data class Success<T>(val data: T) : Result<T>()\n    data class Error(val msg: String) : Result<Nothing>()\n    object Loading : Result<Nothing>()\n}",
+    "pros": [
+      "Type-safe state modeling",
+      "Exhaustive when branches",
+      "No unchecked casts"
+    ],
+    "cons": [
+      "Can't add cases outside module",
+      "Sealed hierarchy size"
+    ],
+    "useCases": [
+      "API state (Loading/Success/Error)",
+      "Navigation events",
+      "Payment status"
+    ],
+    "tags": [
+      "kotlin",
+      "sealed-class",
+      "state-modeling"
+    ]
+  },
+  {
+    "tech": "Kotlin",
+    "level": "Mid-Level",
+    "title": "Kotlin DSL & Extension Functions",
+    "subtopics": [
+      "Extension function",
+      "Operator overloading",
+      "DSL builder pattern",
+      "@DslMarker",
+      "apply/let/run/also/with"
+    ],
+    "codeSnippet": "fun buildRequest(block: Request.Builder.() -> Unit): Request {\n    return Request.Builder().apply(block).build()\n}",
+    "pros": [
+      "Readable builder APIs",
+      "Reduces boilerplate",
+      "Gradle Kotlin DSL"
+    ],
+    "cons": [
+      "DSL debugging complexity",
+      "Misuse causes unreadable code"
+    ],
+    "useCases": [
+      "Retrofit DSL wrappers",
+      "Test fixture builders",
+      "Gradle build scripts"
+    ],
+    "tags": [
+      "kotlin",
+      "dsl",
+      "extension-functions"
+    ]
+  },
+  {
+    "tech": "Kotlin",
+    "level": "Mid-Level",
+    "title": "Delegates & Properties",
+    "subtopics": [
+      "lazy",
+      "observable",
+      "vetoable",
+      "by map",
+      "Custom delegate",
+      "ReadWriteProperty"
+    ],
+    "codeSnippet": "val config: Config by lazy { Config.load() }\nvar name: String by Delegates.observable(\"\") { _, old, new -> log(\"$old -> $new\") }",
+    "pros": [
+      "Lazy initialization",
+      "Change observation",
+      "Reduced boilerplate"
+    ],
+    "cons": [
+      "Debugging delegate chain",
+      "Not always obvious to readers"
+    ],
+    "useCases": [
+      "Lazy DB connection",
+      "Observing preference changes",
+      "Delegating to map for JSON parsing"
+    ],
+    "tags": [
+      "kotlin",
+      "delegates",
+      "properties"
+    ]
+  },
+  {
+    "tech": "Kotlin",
+    "level": "Senior",
+    "title": "Kotlin Multiplatform (KMP)",
+    "subtopics": [
+      "expect/actual",
+      "commonMain",
+      "iosMain/androidMain",
+      "Ktor",
+      "SQLDelight",
+      "Shared ViewModel"
+    ],
+    "codeSnippet": "expect fun getPlatformName(): String\nactual fun getPlatformName() = \"Android\" // androidMain\nactual fun getPlatformName() = \"iOS\" // iosMain",
+    "pros": [
+      "Share business logic across platforms",
+      "Single source of truth",
+      "Reduces duplication"
+    ],
+    "cons": [
+      "Ecosystem maturity",
+      "iOS team Kotlin knowledge",
+      "Build complexity"
+    ],
+    "useCases": [
+      "Shared auth module for Android+iOS",
+      "Common API client",
+      "Shared analytics"
+    ],
+    "tags": [
+      "kmp",
+      "multiplatform",
+      "kotlin",
+      "cross-platform"
+    ]
+  },
+  {
+    "tech": "Kotlin",
+    "level": "Lead",
+    "title": "Kotlin API Design & Library Authoring",
+    "subtopics": [
+      "Public API surface",
+      "Binary compatibility",
+      "@Experimental/@RequiresOptIn",
+      "Coroutines in libraries",
+      "Backward compatibility"
+    ],
+    "codeSnippet": "@RequiresOptIn(message = \"This API is experimental\")\nannotation class ExperimentalFeature\n@ExperimentalFeature\nfun newBehavior() { }",
+    "pros": [
+      "Controlled API evolution",
+      "Opt-in safety",
+      "Clear deprecation path"
+    ],
+    "cons": [
+      "Versioning discipline",
+      "Broad consumer impact of breaks"
+    ],
+    "useCases": [
+      "Publishing internal SDK",
+      "Open-source Kotlin library",
+      "Platform SDK design"
+    ],
+    "tags": [
+      "kotlin",
+      "library",
+      "api-design",
+      "lead"
+    ]
+  },
+  {
+    "tech": "Jetpack Compose",
+    "level": "Fresher",
+    "title": "Composable Functions & State",
+    "subtopics": [
+      "@Composable",
+      "remember",
+      "mutableStateOf",
+      "recomposition",
+      "Column/Row/Box"
+    ],
+    "codeSnippet": "@Composable fun Greeting(name: String) {\n    var clicked by remember { mutableStateOf(false) }\n    Text(if (clicked) \"Hi $name!\" else \"Hello $name\")\n}",
+    "pros": [
+      "Declarative UI",
+      "Less boilerplate",
+      "Live preview"
+    ],
+    "cons": [
+      "Recomposition overhead if misused",
+      "New mental model"
+    ],
+    "useCases": [
+      "Toggle buttons",
+      "Form input fields",
+      "Counter widgets"
+    ],
+    "tags": [
+      "compose",
+      "state",
+      "ui-basics"
+    ]
+  },
+  {
+    "tech": "Jetpack Compose",
+    "level": "Fresher",
+    "title": "Modifiers & Layouts",
+    "subtopics": [
+      "Modifier chain",
+      "padding/fillMaxSize/weight",
+      "Box/Column/Row",
+      "LazyColumn"
+    ],
+    "codeSnippet": "LazyColumn {\n    items(userList) { user ->\n        UserCard(user, Modifier.fillMaxWidth().padding(8.dp))\n    }\n}",
+    "pros": [
+      "Flexible layout system",
+      "Lazy loading built-in",
+      "Modifier composability"
+    ],
+    "cons": [
+      "Order of modifiers matters",
+      "Debugging layout issues"
+    ],
+    "useCases": [
+      "Scrollable feed",
+      "Grid of products",
+      "Settings list"
+    ],
+    "tags": [
+      "compose",
+      "layout",
+      "modifier"
+    ]
+  },
+  {
+    "tech": "Jetpack Compose",
+    "level": "Junior",
+    "title": "Navigation in Compose",
+    "subtopics": [
+      "NavController",
+      "NavHost",
+      "composable route",
+      "arguments",
+      "deep links",
+      "nested navigation"
+    ],
+    "codeSnippet": "val navController = rememberNavController()\nNavHost(navController, startDestination = \"home\") {\n    composable(\"home\") { HomeScreen(navController) }\n    composable(\"detail/{id}\") { DetailScreen(it.arguments?.getString(\"id\")) }\n}",
+    "pros": [
+      "Type-safe routes (with libs)",
+      "Deep link support",
+      "Back stack management"
+    ],
+    "cons": [
+      "String-based routes error-prone",
+      "No compile-time safety by default"
+    ],
+    "useCases": [
+      "Bottom nav tab switching",
+      "Detail screen from list",
+      "Login to home flow"
+    ],
+    "tags": [
+      "compose",
+      "navigation",
+      "routing"
+    ]
+  },
+  {
+    "tech": "Jetpack Compose",
+    "level": "Mid-Level",
+    "title": "State Management & Side Effects",
+    "subtopics": [
+      "State hoisting",
+      "UiState pattern",
+      "LaunchedEffect",
+      "SideEffect",
+      "DisposableEffect",
+      "derivedStateOf",
+      "snapshotFlow"
+    ],
+    "codeSnippet": "LaunchedEffect(userId) {\n    viewModel.loadUser(userId)\n}\nval uiState by viewModel.state.collectAsStateWithLifecycle()",
+    "pros": [
+      "Predictable state flow",
+      "Lifecycle-aware effects",
+      "Coroutine integration"
+    ],
+    "cons": [
+      "Effect lifecycle subtleties",
+      "Over-hoisting state"
+    ],
+    "useCases": [
+      "Loading data on screen open",
+      "Observing scroll position",
+      "Analytics event on composition"
+    ],
+    "tags": [
+      "compose",
+      "side-effects",
+      "state-hoisting"
+    ]
+  },
+  {
+    "tech": "Jetpack Compose",
+    "level": "Mid-Level",
+    "title": "Custom Layouts & Canvas",
+    "subtopics": [
+      "Layout composable",
+      "MeasurePolicy",
+      "Canvas",
+      "DrawScope",
+      "Animations"
+    ],
+    "codeSnippet": "Canvas(Modifier.size(200.dp)) {\n    drawCircle(color = Color.Blue, radius = size.minDimension / 2)\n}",
+    "pros": [
+      "Pixel-perfect custom UI",
+      "Rich animations",
+      "Complex chart rendering"
+    ],
+    "cons": [
+      "Steep learning curve",
+      "Performance on heavy canvases"
+    ],
+    "useCases": [
+      "Progress ring animation",
+      "Custom chart widget",
+      "Signature capture"
+    ],
+    "tags": [
+      "compose",
+      "canvas",
+      "animation",
+      "custom-layout"
+    ]
+  },
+  {
+    "tech": "Jetpack Compose",
+    "level": "Senior",
+    "title": "Performance & Stability",
+    "subtopics": [
+      "Stable/Immutable annotations",
+      "Baseline profiles",
+      "Recomposition count",
+      "remember with keys",
+      "Lazy list keys"
+    ],
+    "codeSnippet": "@Stable\ndata class UiUser(val id: String, val name: String)",
+    "pros": [
+      "Minimized recompositions",
+      "Faster startup with Baseline Profiles",
+      "Measurable via tooling"
+    ],
+    "cons": [
+      "Requires discipline",
+      "Tooling still maturing"
+    ],
+    "useCases": [
+      "Feed with 1000 items without jank",
+      "Reducing startup time by 300ms",
+      "Fixing recomposition storm in form"
+    ],
+    "tags": [
+      "compose",
+      "performance",
+      "stability",
+      "recomposition"
+    ]
+  },
+  {
+    "tech": "Jetpack Compose",
+    "level": "Lead",
+    "title": "Compose Design System at Scale",
+    "subtopics": [
+      "Design tokens",
+      "Component library",
+      "Theming",
+      "Accessibility (semantics)",
+      "Multi-module Compose",
+      "Preview strategies"
+    ],
+    "codeSnippet": "object AppTheme {\n    val colors: AppColors @Composable get() = LocalAppColors.current\n}",
+    "pros": [
+      "Consistent UI across teams",
+      "Accessible by default",
+      "Faster feature development"
+    ],
+    "cons": [
+      "Governance overhead",
+      "Preview limitations with data",
+      "Version alignment across modules"
+    ],
+    "useCases": [
+      "Design system for 20 Android teams",
+      "Accessibility audit automation",
+      "Theming for white-label apps"
+    ],
+    "tags": [
+      "compose",
+      "design-system",
+      "theming",
+      "lead"
+    ]
+  },
+  {
+    "tech": "Flutter",
+    "level": "Fresher",
+    "title": "Widgets & Stateless/Stateful",
+    "subtopics": [
+      "StatelessWidget",
+      "StatefulWidget",
+      "setState",
+      "Widget tree",
+      "BuildContext"
+    ],
+    "codeSnippet": "class Counter extends StatefulWidget {\n  @override State<Counter> createState() => _CounterState();\n}\nclass _CounterState extends State<Counter> {\n  int count = 0;\n  @override Widget build(BuildContext ctx) => Text('$count');\n}",
+    "pros": [
+      "Hot reload",
+      "Single codebase",
+      "Expressive UI"
+    ],
+    "cons": [
+      "Large APK size",
+      "Platform-specific behavior gaps"
+    ],
+    "useCases": [
+      "Counter app",
+      "Login form",
+      "Profile card"
+    ],
+    "tags": [
+      "flutter",
+      "widgets",
+      "dart"
+    ]
+  },
+  {
+    "tech": "Flutter",
+    "level": "Junior",
+    "title": "State Management (Provider/Riverpod)",
+    "subtopics": [
+      "ChangeNotifier",
+      "Provider",
+      "Riverpod",
+      "StateNotifier",
+      "Consumer widget",
+      "ref.watch"
+    ],
+    "codeSnippet": "final counterProvider = StateNotifierProvider<CounterNotifier, int>((ref) => CounterNotifier());\nfinal count = ref.watch(counterProvider);",
+    "pros": [
+      "Scalable state",
+      "Testable",
+      "No BuildContext drilling"
+    ],
+    "cons": [
+      "Learning curve",
+      "Boilerplate for simple state"
+    ],
+    "useCases": [
+      "Shopping cart state",
+      "Auth state",
+      "Theme toggle"
+    ],
+    "tags": [
+      "flutter",
+      "state-management",
+      "riverpod"
+    ]
+  },
+  {
+    "tech": "Flutter",
+    "level": "Mid-Level",
+    "title": "Platform Channels & Native Integration",
+    "subtopics": [
+      "MethodChannel",
+      "EventChannel",
+      "BasicMessageChannel",
+      "Platform-specific code",
+      "FFI"
+    ],
+    "codeSnippet": "const channel = MethodChannel('com.example/battery');\nfinal level = await channel.invokeMethod('getBatteryLevel');",
+    "pros": [
+      "Access native APIs",
+      "Reuse existing native libs",
+      "Full device capability"
+    ],
+    "cons": [
+      "Maintenance burden of native code",
+      "Platform-specific bugs"
+    ],
+    "useCases": [
+      "Biometric auth",
+      "Camera access",
+      "Bluetooth integration"
+    ],
+    "tags": [
+      "flutter",
+      "platform-channel",
+      "native"
+    ]
+  },
+  {
+    "tech": "Flutter",
+    "level": "Senior",
+    "title": "Performance Optimization",
+    "subtopics": [
+      "Shader warm-up",
+      "Raster thread",
+      "DevTools profiler",
+      "const widgets",
+      "RepaintBoundary",
+      "Image caching"
+    ],
+    "codeSnippet": "RepaintBoundary(\n  child: HeavyAnimationWidget(),\n)",
+    "pros": [
+      "Reduced jank",
+      "Better cold start",
+      "Lower memory usage"
+    ],
+    "cons": [
+      "Profiling complexity",
+      "Platform rendering differences"
+    ],
+    "useCases": [
+      "Scroll performance in image-heavy feed",
+      "Reducing shader jank on iOS",
+      "Memory optimization for chat app"
+    ],
+    "tags": [
+      "flutter",
+      "performance",
+      "devtools"
+    ]
+  },
+  {
+    "tech": "Flutter",
+    "level": "Lead",
+    "title": "Flutter at Scale & Architecture",
+    "subtopics": [
+      "Clean architecture in Flutter",
+      "BLoC pattern",
+      "Melos for monorepo",
+      "CI/CD with Fastlane/Codemagic"
+    ],
+    "codeSnippet": "# melos.yaml\npackages:\n  - packages/**\nscripts:\n  test: melos run test --no-select",
+    "pros": [
+      "Consistent architecture",
+      "Independent team modules",
+      "Automated releases"
+    ],
+    "cons": [
+      "Monorepo complexity",
+      "Build time",
+      "Governance overhead"
+    ],
+    "useCases": [
+      "Multi-team Flutter app",
+      "White-label product",
+      "Automated Play Store deployment"
+    ],
+    "tags": [
+      "flutter",
+      "architecture",
+      "monorepo",
+      "lead"
+    ]
+  },
+  {
+    "tech": "Java",
+    "level": "Fresher",
+    "title": "OOP Fundamentals",
+    "subtopics": [
+      "Class/Object",
+      "Inheritance",
+      "Polymorphism",
+      "Encapsulation",
+      "Abstraction",
+      "Interfaces",
+      "Abstract classes"
+    ],
+    "codeSnippet": "public interface Shape { double area(); }\npublic class Circle implements Shape {\n    private double r;\n    @Override public double area() { return Math.PI * r * r; }\n}",
+    "pros": [
+      "Code reuse",
+      "Maintainability",
+      "Modularity"
+    ],
+    "cons": [
+      "Inheritance deep hierarchies",
+      "Verbose boilerplate"
+    ],
+    "useCases": [
+      "Shape hierarchy in graphics app",
+      "Animal class in simulation",
+      "Employee payroll system"
+    ],
+    "tags": [
+      "java",
+      "oop",
+      "basics"
+    ]
+  },
+  {
+    "tech": "Java",
+    "level": "Fresher",
+    "title": "Collections Framework",
+    "subtopics": [
+      "List/ArrayList",
+      "HashMap/LinkedHashMap",
+      "HashSet",
+      "Queue/Deque",
+      "Comparable/Comparator",
+      "Generics"
+    ],
+    "codeSnippet": "Map<String, List<String>> grouped = items.stream()\n    .collect(Collectors.groupingBy(Item::getCategory));",
+    "pros": [
+      "Rich built-in data structures",
+      "Type-safe with generics",
+      "High performance"
+    ],
+    "cons": [
+      "Thread-safety requires ConcurrentCollections",
+      "Autoboxing overhead"
+    ],
+    "useCases": [
+      "Grouping products by category",
+      "Deduplicating user IDs",
+      "Priority queue for task scheduling"
+    ],
+    "tags": [
+      "java",
+      "collections",
+      "generics"
+    ]
+  },
+  {
+    "tech": "Java",
+    "level": "Junior",
+    "title": "Multithreading & Concurrency",
+    "subtopics": [
+      "Thread",
+      "Runnable",
+      "synchronized",
+      "volatile",
+      "Executor",
+      "Future",
+      "Callable"
+    ],
+    "codeSnippet": "ExecutorService executor = Executors.newFixedThreadPool(4);\nFuture<String> result = executor.submit(() -> fetchDataFromDB());\nString data = result.get();",
+    "pros": [
+      "True parallelism",
+      "Non-blocking I/O with CompletableFuture",
+      "Thread pool management"
+    ],
+    "cons": [
+      "Deadlocks",
+      "Race conditions",
+      "Complex debugging"
+    ],
+    "useCases": [
+      "Parallel batch processing",
+      "Async report generation",
+      "Web server request handling"
+    ],
+    "tags": [
+      "java",
+      "multithreading",
+      "concurrency"
+    ]
+  },
+  {
+    "tech": "Java",
+    "level": "Junior",
+    "title": "Exception Handling & Logging",
+    "subtopics": [
+      "try-catch-finally",
+      "Custom exceptions",
+      "checked/unchecked",
+      "try-with-resources",
+      "SLF4J/Logback"
+    ],
+    "codeSnippet": "try (Connection conn = dataSource.getConnection()) {\n} catch (SQLException e) {\n    log.error(\"DB error: {}\", e.getMessage(), e);\n    throw new DataAccessException(\"Failed\", e);\n}",
+    "pros": [
+      "Robust error recovery",
+      "Structured logging",
+      "Resource cleanup"
+    ],
+    "cons": [
+      "Checked exception verbosity",
+      "Swallowing exceptions"
+    ],
+    "useCases": [
+      "DB connection error handling",
+      "File parsing error recovery",
+      "Payment failure logging"
+    ],
+    "tags": [
+      "java",
+      "exceptions",
+      "logging"
+    ]
+  },
+  {
+    "tech": "Java",
+    "level": "Mid-Level",
+    "title": "Java Streams & Functional",
+    "subtopics": [
+      "Stream API",
+      "filter/map/reduce",
+      "Collectors",
+      "Optional",
+      "Method references",
+      "CompletableFuture"
+    ],
+    "codeSnippet": "List<String> names = employees.stream()\n    .filter(e -> e.getSalary() > 50000)\n    .map(Employee::getName)\n    .sorted()\n    .collect(Collectors.toList());",
+    "pros": [
+      "Declarative data processing",
+      "Parallel stream support",
+      "Reduces boilerplate"
+    ],
+    "cons": [
+      "Debugging streams is hard",
+      "Parallel stream pitfalls",
+      "Overhead for small collections"
+    ],
+    "useCases": [
+      "Report generation",
+      "ETL pipeline",
+      "Aggregating analytics events"
+    ],
+    "tags": [
+      "java",
+      "streams",
+      "functional",
+      "java8"
+    ]
+  },
+  {
+    "tech": "Java",
+    "level": "Mid-Level",
+    "title": "Design Patterns",
+    "subtopics": [
+      "Singleton",
+      "Factory",
+      "Builder",
+      "Observer",
+      "Strategy",
+      "Decorator",
+      "Proxy"
+    ],
+    "codeSnippet": "User user = new User.Builder(\"john@email.com\")\n    .name(\"John\")\n    .role(Role.CANDIDATE)\n    .build();",
+    "pros": [
+      "Proven solutions",
+      "Common vocabulary",
+      "Maintainable code"
+    ],
+    "cons": [
+      "Pattern overuse",
+      "Adds indirection"
+    ],
+    "useCases": [
+      "DAO pattern for DB access",
+      "Observer for event bus",
+      "Strategy for sorting algorithms"
+    ],
+    "tags": [
+      "java",
+      "design-patterns",
+      "architecture"
+    ]
+  },
+  {
+    "tech": "Java",
+    "level": "Senior",
+    "title": "JVM Internals & GC Tuning",
+    "subtopics": [
+      "JVM memory model",
+      "GC algorithms (G1,ZGC,Shenandoah)",
+      "JIT compilation",
+      "Class loading",
+      "Thread dump analysis"
+    ],
+    "codeSnippet": "-XX:+UseG1GC -Xms2g -Xmx8g\n-XX:MaxGCPauseMillis=200\n-XX:+HeapDumpOnOutOfMemoryError",
+    "pros": [
+      "Predictable latency with GC tuning",
+      "Memory leak diagnosis",
+      "JIT warm-up optimization"
+    ],
+    "cons": [
+      "Deep JVM expertise required",
+      "Platform-specific GC behavior"
+    ],
+    "useCases": [
+      "Reducing GC pauses in trading system",
+      "Diagnosing OOM in batch job",
+      "Thread dump analysis in production"
+    ],
+    "tags": [
+      "java",
+      "jvm",
+      "performance",
+      "gc"
+    ]
+  },
+  {
+    "tech": "Java",
+    "level": "Lead",
+    "title": "Java Ecosystem Architecture Decisions",
+    "subtopics": [
+      "Java LTS strategy (11/17/21)",
+      "Jakarta EE vs Spring",
+      "Build tools (Maven/Gradle)",
+      "Code quality gates",
+      "Dependency management at scale"
+    ],
+    "codeSnippet": "<dependencyManagement>\n  <dependencies>\n    <dependency>\n      <groupId>org.springframework.boot</groupId>\n      <artifactId>spring-boot-dependencies</artifactId>\n      <version>${spring.version}</version>\n      <type>pom</type><scope>import</scope>\n    </dependency>\n  </dependencies>\n</dependencyManagement>",
+    "pros": [
+      "Version consistency",
+      "Faster security patching",
+      "Clear upgrade path"
+    ],
+    "cons": [
+      "Migration cost",
+      "Team retraining",
+      "Third-party library support"
+    ],
+    "useCases": [
+      "Migrating from Java 8 to Java 17",
+      "Enforcing code quality org-wide",
+      "Standardizing on Gradle across 30 services"
+    ],
+    "tags": [
+      "java",
+      "architecture",
+      "lead",
+      "lts"
+    ]
+  },
+  {
+    "tech": "Spring Boot",
+    "level": "Fresher",
+    "title": "Spring Boot Basics & Auto-configuration",
+    "subtopics": [
+      "@SpringBootApplication",
+      "Auto-configuration",
+      "application.properties",
+      "Spring starters",
+      "Embedded Tomcat"
+    ],
+    "codeSnippet": "@SpringBootApplication\npublic class App {\n    public static void main(String[] args) {\n        SpringApplication.run(App.class, args);\n    }\n}",
+    "pros": [
+      "Zero XML config",
+      "Convention over configuration",
+      "Rapid startup"
+    ],
+    "cons": [
+      "Magic can hide bugs",
+      "Large dependency tree"
+    ],
+    "useCases": [
+      "REST API starter",
+      "Data JPA starter",
+      "Actuator monitoring"
+    ],
+    "tags": [
+      "spring-boot",
+      "basics",
+      "auto-configuration"
+    ]
+  },
+  {
+    "tech": "Spring Boot",
+    "level": "Fresher",
+    "title": "REST Controllers",
+    "subtopics": [
+      "@RestController",
+      "@GetMapping/@PostMapping",
+      "@RequestBody",
+      "@PathVariable",
+      "@RequestParam",
+      "ResponseEntity"
+    ],
+    "codeSnippet": "@RestController @RequestMapping(\"/api/users\")\npublic class UserController {\n    @GetMapping(\"/{id}\")\n    public ResponseEntity<User> get(@PathVariable String id) {\n        return ResponseEntity.ok(service.findById(id));\n    }\n}",
+    "pros": [
+      "Clean REST endpoints",
+      "Built-in serialization",
+      "HTTP status control"
+    ],
+    "cons": [
+      "No built-in versioning",
+      "Validation requires extra setup"
+    ],
+    "useCases": [
+      "User CRUD API",
+      "Product search endpoint",
+      "Interview session creation"
+    ],
+    "tags": [
+      "spring-boot",
+      "rest",
+      "controller"
+    ]
+  },
+  {
+    "tech": "Spring Boot",
+    "level": "Junior",
+    "title": "Spring Data JPA",
+    "subtopics": [
+      "@Entity",
+      "@Repository",
+      "JpaRepository",
+      "JPQL",
+      "@Query",
+      "Pagination",
+      "@Transactional"
+    ],
+    "codeSnippet": "public interface UserRepository extends JpaRepository<User, String> {\n    @Query(\"SELECT u FROM User u WHERE u.role = :role\")\n    Page<User> findByRole(@Param(\"role\") Role role, Pageable pageable);\n}",
+    "pros": [
+      "Zero boilerplate CRUD",
+      "Pagination support",
+      "Auditing"
+    ],
+    "cons": [
+      "N+1 query problem",
+      "Complex queries still need JPQL/native"
+    ],
+    "useCases": [
+      "User listing with pagination",
+      "Finding sessions by candidate",
+      "Filtering questions by difficulty"
+    ],
+    "tags": [
+      "spring-data",
+      "jpa",
+      "database",
+      "repository"
+    ]
+  },
+  {
+    "tech": "Spring Boot",
+    "level": "Junior",
+    "title": "Spring Security & JWT",
+    "subtopics": [
+      "SecurityFilterChain",
+      "AuthenticationManager",
+      "JWT",
+      "BCryptPasswordEncoder",
+      "@PreAuthorize"
+    ],
+    "codeSnippet": "http.csrf().disable()\n    .authorizeHttpRequests()\n    .requestMatchers(\"/api/auth/**\").permitAll()\n    .anyRequest().authenticated()\n    .and().addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);",
+    "pros": [
+      "Declarative security",
+      "Role-based access",
+      "Stateless JWT auth"
+    ],
+    "cons": [
+      "Complex security chain debugging",
+      "CSRF tradeoffs with SPA",
+      "Token revocation complexity"
+    ],
+    "useCases": [
+      "Interview platform login",
+      "Admin-only content management",
+      "Candidate-restricted interview start"
+    ],
+    "tags": [
+      "spring-security",
+      "jwt",
+      "authentication",
+      "rbac"
+    ]
+  },
+  {
+    "tech": "Spring Boot",
+    "level": "Mid-Level",
+    "title": "Spring Boot Caching & Redis",
+    "subtopics": [
+      "@EnableCaching",
+      "@Cacheable",
+      "@CacheEvict",
+      "@CachePut",
+      "RedisCacheManager",
+      "TTL configuration"
+    ],
+    "codeSnippet": "@Cacheable(value = \"questions\", key = \"#techId + '-' + #level\")\npublic List<Question> getQuestions(String techId, String level) {\n    return questionRepo.findByTechAndLevel(techId, level);\n}",
+    "pros": [
+      "Reduced DB load",
+      "Faster API responses",
+      "Configurable TTL"
+    ],
+    "cons": [
+      "Stale cache bugs",
+      "Cache invalidation complexity",
+      "Distributed cache consistency"
+    ],
+    "useCases": [
+      "Caching question bank",
+      "Session result caching",
+      "Rate limit counters in Redis"
+    ],
+    "tags": [
+      "spring-boot",
+      "caching",
+      "redis",
+      "performance"
+    ]
+  },
+  {
+    "tech": "Spring Boot",
+    "level": "Mid-Level",
+    "title": "Spring Boot Actuator & Monitoring",
+    "subtopics": [
+      "health",
+      "metrics",
+      "Micrometer",
+      "Prometheus integration",
+      "Custom health indicators"
+    ],
+    "codeSnippet": "@Component\npublic class DBHealthIndicator implements HealthIndicator {\n    @Override public Health health() {\n        return dbUp ? Health.up().build() : Health.down().withDetail(\"error\", msg).build();\n    }\n}",
+    "pros": [
+      "Production health visibility",
+      "Metrics for dashboards",
+      "Custom alerts"
+    ],
+    "cons": [
+      "Exposing sensitive endpoints",
+      "Overhead of metric collection"
+    ],
+    "useCases": [
+      "Kubernetes liveness probe",
+      "Grafana dashboard for API latency",
+      "Alerting on high error rate"
+    ],
+    "tags": [
+      "spring-boot",
+      "actuator",
+      "monitoring",
+      "observability"
+    ]
+  },
+  {
+    "tech": "Spring Boot",
+    "level": "Senior",
+    "title": "Microservices with Spring Boot",
+    "subtopics": [
+      "Service decomposition",
+      "FeignClient",
+      "Spring Cloud Gateway",
+      "Config Server",
+      "Resilience4j",
+      "Service discovery (Eureka)"
+    ],
+    "codeSnippet": "@FeignClient(name = \"evaluation-service\")\npublic interface EvaluationClient {\n    @PostMapping(\"/evaluate\")\n    EvaluationResult evaluate(@RequestBody EvaluationRequest req);\n}",
+    "pros": [
+      "Independent deployability",
+      "Technology heterogeneity",
+      "Fault isolation"
+    ],
+    "cons": [
+      "Distributed tracing complexity",
+      "Network latency",
+      "Data consistency"
+    ],
+    "useCases": [
+      "Interview evaluation microservice",
+      "Notification service decoupling",
+      "AI evaluation service isolation"
+    ],
+    "tags": [
+      "spring-boot",
+      "microservices",
+      "cloud",
+      "resilience"
+    ]
+  },
+  {
+    "tech": "Spring Boot",
+    "level": "Lead",
+    "title": "Spring Boot Platform Engineering",
+    "subtopics": [
+      "Internal starter creation",
+      "Org-wide Spring Config Server",
+      "BOM management",
+      "Security baseline starters",
+      "OpenTelemetry"
+    ],
+    "codeSnippet": "@Configuration\n@ConditionalOnProperty(\"internal.security.enabled\", havingValue = \"true\")\npublic class SecurityAutoConfiguration { }",
+    "pros": [
+      "Consistent org-wide setup",
+      "Faster new service bootstrap",
+      "Enforced security baseline"
+    ],
+    "cons": [
+      "Starter maintenance burden",
+      "Versioning across services",
+      "Developer friction if too opinionated"
+    ],
+    "useCases": [
+      "Creating company-starter-security used by 30 services",
+      "Enforcing distributed tracing org-wide",
+      "Internal API gateway standard"
+    ],
+    "tags": [
+      "spring-boot",
+      "platform",
+      "lead",
+      "starter",
+      "opentelemetry"
+    ]
+  },
+  {
+    "tech": "React",
+    "level": "Fresher",
+    "title": "JSX & Components",
+    "subtopics": [
+      "JSX",
+      "Functional components",
+      "Props",
+      "Default props",
+      "Children prop",
+      "key prop"
+    ],
+    "codeSnippet": "function Welcome({ name }) {\n    return <h1>Hello, {name}!</h1>;\n}\nconst App = () => <Welcome name=\"Alex\" />;",
+    "pros": [
+      "Declarative UI",
+      "Component reuse",
+      "Virtual DOM efficiency"
+    ],
+    "cons": [
+      "JSX learning curve",
+      "Class vs functional confusion"
+    ],
+    "useCases": [
+      "Reusable Button component",
+      "Profile card",
+      "Header with navigation"
+    ],
+    "tags": [
+      "react",
+      "jsx",
+      "components",
+      "basics"
+    ]
+  },
+  {
+    "tech": "React",
+    "level": "Fresher",
+    "title": "useState & useEffect",
+    "subtopics": [
+      "useState",
+      "useEffect",
+      "dependency array",
+      "cleanup function",
+      "stale closure"
+    ],
+    "codeSnippet": "const [data, setData] = useState(null);\nuseEffect(() => {\n    fetch('/api/user').then(r => r.json()).then(setData);\n    return () => controller.abort();\n}, [userId]);",
+    "pros": [
+      "Simple state management",
+      "Side effect lifecycle control",
+      "Cleanup prevents memory leaks"
+    ],
+    "cons": [
+      "Stale closure bugs",
+      "Infinite re-render if deps wrong"
+    ],
+    "useCases": [
+      "Fetching user profile on mount",
+      "Auto-refresh timer",
+      "Subscribing to WebSocket"
+    ],
+    "tags": [
+      "react",
+      "hooks",
+      "state",
+      "effects"
+    ]
+  },
+  {
+    "tech": "React",
+    "level": "Junior",
+    "title": "React Router & Navigation",
+    "subtopics": [
+      "BrowserRouter",
+      "Route",
+      "Link",
+      "useNavigate",
+      "useParams",
+      "Nested routes",
+      "Protected routes"
+    ],
+    "codeSnippet": "<Routes>\n  <Route path='/' element={<Home />} />\n  <Route path='/interview/:id' element={<PrivateRoute><Interview /></PrivateRoute>} />\n</Routes>",
+    "pros": [
+      "Declarative routing",
+      "Nested layouts",
+      "URL param extraction"
+    ],
+    "cons": [
+      "Complex nested route config",
+      "No built-in transition animations"
+    ],
+    "useCases": [
+      "Admin portal route protection",
+      "Interview session deep link",
+      "Dashboard tab routing"
+    ],
+    "tags": [
+      "react",
+      "router",
+      "navigation"
+    ]
+  },
+  {
+    "tech": "React",
+    "level": "Junior",
+    "title": "State Management with Context/Redux",
+    "subtopics": [
+      "Context API",
+      "useContext",
+      "Redux Toolkit",
+      "createSlice",
+      "useSelector",
+      "useDispatch",
+      "RTK Query"
+    ],
+    "codeSnippet": "const { data: user } = useGetCurrentUserQuery();\nconst dispatch = useDispatch();\ndispatch(setAuth({ token, user }));",
+    "pros": [
+      "Global state without prop drilling",
+      "RTK Query: built-in caching",
+      "Dev tools support"
+    ],
+    "cons": [
+      "Context re-render issues",
+      "Redux boilerplate",
+      "Overkill for small apps"
+    ],
+    "useCases": [
+      "Auth state across admin portal",
+      "Interview session global state",
+      "Notification counter in header"
+    ],
+    "tags": [
+      "react",
+      "redux",
+      "context",
+      "state-management"
+    ]
+  },
+  {
+    "tech": "React",
+    "level": "Mid-Level",
+    "title": "Performance Optimization",
+    "subtopics": [
+      "React.memo",
+      "useMemo",
+      "useCallback",
+      "lazy/Suspense",
+      "Code splitting",
+      "Virtualization (react-window)"
+    ],
+    "codeSnippet": "const ExpensiveList = React.memo(({ items }) => (\n    <VirtualList height={600} itemCount={items.length}\n        itemSize={50} width='100%'>\n        {({ index, style }) => <Row style={style} item={items[index]} />}\n    </VirtualList>\n));",
+    "pros": [
+      "Reduced unnecessary renders",
+      "Lazy loaded routes",
+      "Virtualized large lists"
+    ],
+    "cons": [
+      "Premature optimization pitfalls",
+      "memo/useMemo comparison overhead"
+    ],
+    "useCases": [
+      "Dashboard with 1000 row table",
+      "Lazy loading report charts",
+      "Memoizing expensive filter function"
+    ],
+    "tags": [
+      "react",
+      "performance",
+      "memo",
+      "virtualization"
+    ]
+  },
+  {
+    "tech": "React",
+    "level": "Senior",
+    "title": "React Architecture at Scale",
+    "subtopics": [
+      "Feature-based folder structure",
+      "Compound components",
+      "Render props",
+      "Custom hook extraction",
+      "Micro-frontend with Module Federation"
+    ],
+    "codeSnippet": "module.exports = { plugins: [new ModuleFederationPlugin({\n    name: 'admin_portal',\n    exposes: { './InterviewWidget': './src/features/interview/Widget' },\n})] };",
+    "pros": [
+      "Independent team deployments",
+      "Shared component library",
+      "Scalable folder structure"
+    ],
+    "cons": [
+      "Module Federation complexity",
+      "Version mismatch between remotes",
+      "Shared state across micro-frontends"
+    ],
+    "useCases": [
+      "Admin portal as host + interview widget as remote",
+      "Shared design system across React apps",
+      "Feature team autonomy"
+    ],
+    "tags": [
+      "react",
+      "architecture",
+      "micro-frontend",
+      "scale"
+    ]
+  },
+  {
+    "tech": "React",
+    "level": "Lead",
+    "title": "Frontend Platform Strategy",
+    "subtopics": [
+      "Design system governance",
+      "Nx monorepo",
+      "Storybook",
+      "Chromatic visual testing",
+      "Bundle analysis",
+      "Core Web Vitals strategy"
+    ],
+    "codeSnippet": "nx generate @nx/react:library feature-interviews --directory=libs",
+    "pros": [
+      "Consistent UX across products",
+      "Automated visual regression",
+      "Build orchestration"
+    ],
+    "cons": [
+      "Governance overhead",
+      "Storybook maintenance",
+      "Monorepo tooling learning curve"
+    ],
+    "useCases": [
+      "Enterprise design system for 10 React apps",
+      "Automated Lighthouse CI gates",
+      "Nx-based monorepo for admin + candidate portal"
+    ],
+    "tags": [
+      "react",
+      "platform",
+      "monorepo",
+      "design-system",
+      "lead"
+    ]
+  },
+  {
+    "tech": "Microservices",
+    "level": "Fresher",
+    "title": "What are Microservices?",
+    "subtopics": [
+      "Monolith vs microservices",
+      "Service boundaries",
+      "API contracts",
+      "Independent deployment",
+      "Conway's Law"
+    ],
+    "codeSnippet": "# Monolith: single deployable unit\n# Microservice: user-service, interview-service, notification-service\n# Each has own DB, own deployment",
+    "pros": [
+      "Independent scaling",
+      "Technology heterogeneity",
+      "Fault isolation"
+    ],
+    "cons": [
+      "Distributed system complexity",
+      "Network latency",
+      "Data consistency challenges"
+    ],
+    "useCases": [
+      "Netflix (streaming, recommendations, billing as separate services)",
+      "Uber (rides, payments, maps separate services)"
+    ],
+    "tags": [
+      "microservices",
+      "architecture",
+      "basics"
+    ]
+  },
+  {
+    "tech": "Microservices",
+    "level": "Junior",
+    "title": "REST API Design & Versioning",
+    "subtopics": [
+      "Resource naming",
+      "HTTP methods",
+      "Status codes",
+      "Versioning",
+      "OpenAPI/Swagger",
+      "HATEOAS basics"
+    ],
+    "codeSnippet": "@RestController @RequestMapping(\"/api/v1/interviews\")\npublic class InterviewController {\n    @PostMapping\n    public ResponseEntity<InterviewDto> create(@Valid @RequestBody CreateInterviewRequest req) {\n        return ResponseEntity.status(201).body(service.create(req));\n    }\n}",
+    "pros": [
+      "Clear API contracts",
+      "Client flexibility with versioning",
+      "Self-documenting with OpenAPI"
+    ],
+    "cons": [
+      "Versioning proliferation",
+      "Breaking changes management"
+    ],
+    "useCases": [
+      "Interview platform v1 vs v2 migration",
+      "Public API versioning",
+      "Mobile backward compatibility"
+    ],
+    "tags": [
+      "microservices",
+      "rest",
+      "api-design",
+      "versioning"
+    ]
+  },
+  {
+    "tech": "Microservices",
+    "level": "Mid-Level",
+    "title": "Service Communication & Resilience",
+    "subtopics": [
+      "Synchronous (REST/gRPC)",
+      "Asynchronous (Kafka/RabbitMQ)",
+      "Circuit breaker (Resilience4j)",
+      "Retry/timeout",
+      "Bulkhead",
+      "Fallback"
+    ],
+    "codeSnippet": "@CircuitBreaker(name = \"evaluationService\", fallbackMethod = \"fallback\")\npublic EvaluationResult evaluate(Request req) {\n    return evaluationClient.evaluate(req);\n}",
+    "pros": [
+      "Fault tolerance",
+      "Degraded graceful response",
+      "Reduced cascade failures"
+    ],
+    "cons": [
+      "Fallback complexity",
+      "Tuning circuit breaker thresholds"
+    ],
+    "useCases": [
+      "Interview platform: AI evaluation circuit breaker",
+      "Notification service queue-based decoupling",
+      "Payment service retry with idempotency"
+    ],
+    "tags": [
+      "microservices",
+      "resilience",
+      "circuit-breaker",
+      "kafka"
+    ]
+  },
+  {
+    "tech": "Microservices",
+    "level": "Mid-Level",
+    "title": "Distributed Data Management",
+    "subtopics": [
+      "Database per service",
+      "Saga pattern",
+      "Event sourcing",
+      "CQRS",
+      "Eventual consistency",
+      "Outbox pattern"
+    ],
+    "codeSnippet": "@Transactional\npublic void createSession(CreateSessionCmd cmd) {\n    sessionRepo.save(session);\n    outboxRepo.save(new OutboxEvent(\"SESSION_CREATED\", session.getId()));\n}",
+    "pros": [
+      "Data autonomy per service",
+      "Consistency without distributed transactions",
+      "Audit trail with event sourcing"
+    ],
+    "cons": [
+      "Eventual consistency complexity",
+      "Outbox relay infrastructure",
+      "Debugging distributed transactions"
+    ],
+    "useCases": [
+      "Interview session created event triggers notification",
+      "Payment saga: reserve -> pay -> confirm",
+      "User registration event sourcing"
+    ],
+    "tags": [
+      "microservices",
+      "data",
+      "saga",
+      "cqrs"
+    ]
+  },
+  {
+    "tech": "Microservices",
+    "level": "Senior",
+    "title": "API Gateway & Service Mesh",
+    "subtopics": [
+      "Spring Cloud Gateway",
+      "Rate limiting",
+      "Auth at gateway",
+      "Service mesh (Istio/Linkerd)",
+      "mTLS",
+      "Traffic shaping",
+      "Canary deployments"
+    ],
+    "codeSnippet": "spring:\n  cloud:\n    gateway:\n      routes:\n        - id: interview-service\n          uri: lb://INTERVIEW-SERVICE\n          predicates:\n            - Path=/api/v1/interviews/**\n          filters:\n            - AuthFilter\n            - name: RequestRateLimiter\n              args:\n                redis-rate-limiter.replenishRate: 100",
+    "pros": [
+      "Centralized auth",
+      "Rate limiting",
+      "Canary deployments without code change"
+    ],
+    "cons": [
+      "Single point of failure risk",
+      "Gateway config complexity",
+      "Service mesh overhead"
+    ],
+    "useCases": [
+      "Interview platform gateway routing",
+      "Canary rollout of AI evaluation v2",
+      "mTLS between evaluation and scoring services"
+    ],
+    "tags": [
+      "microservices",
+      "api-gateway",
+      "service-mesh",
+      "security"
+    ]
+  },
+  {
+    "tech": "Microservices",
+    "level": "Lead",
+    "title": "Platform Engineering for Microservices",
+    "subtopics": [
+      "Internal developer platform (IDP)",
+      "Golden path templates",
+      "Service templates",
+      "Backstage catalog",
+      "SLOs/SLAs",
+      "Error budget",
+      "Incident management"
+    ],
+    "codeSnippet": "apiVersion: backstage.io/v1alpha1\nkind: Component\nmetadata:\n  name: interview-service\nspec:\n  type: service\n  lifecycle: production\n  owner: team-interviews",
+    "pros": [
+      "Consistent service standards",
+      "Discoverability",
+      "SLO-driven reliability culture"
+    ],
+    "cons": [
+      "IDP maintenance",
+      "Adoption challenges",
+      "Governance overhead"
+    ],
+    "useCases": [
+      "Internal developer portal for 50 microservices",
+      "SLO dashboard for interview platform",
+      "Incident playbook for AI evaluation outage"
+    ],
+    "tags": [
+      "microservices",
+      "platform",
+      "slo",
+      "lead"
+    ]
+  },
+  {
+    "tech": "MySQL",
+    "level": "Fresher",
+    "title": "SQL Basics & CRUD",
+    "subtopics": [
+      "SELECT/INSERT/UPDATE/DELETE",
+      "WHERE clause",
+      "ORDER BY",
+      "LIMIT",
+      "NULL handling",
+      "String functions"
+    ],
+    "codeSnippet": "SELECT id, name, email FROM users\nWHERE status = 'ACTIVE' AND created_at > '2025-01-01'\nORDER BY created_at DESC\nLIMIT 10;",
+    "pros": [
+      "Universal query language",
+      "ACID compliance",
+      "Rich function library"
+    ],
+    "cons": [
+      "Verbose for complex queries",
+      "No horizontal scaling built-in"
+    ],
+    "useCases": [
+      "Fetching active candidates",
+      "Inserting interview session",
+      "Updating question status"
+    ],
+    "tags": [
+      "mysql",
+      "sql",
+      "basics",
+      "crud"
+    ]
+  },
+  {
+    "tech": "MySQL",
+    "level": "Junior",
+    "title": "Joins & Subqueries",
+    "subtopics": [
+      "INNER/LEFT/RIGHT JOIN",
+      "Self join",
+      "Subquery",
+      "EXISTS",
+      "IN",
+      "GROUP BY / HAVING",
+      "Aggregate functions"
+    ],
+    "codeSnippet": "SELECT d.name, COUNT(q.id) AS question_count\nFROM departments d\nLEFT JOIN technologies t ON t.department_id = d.id\nLEFT JOIN questions q ON q.technology_id = t.id\nGROUP BY d.name\nHAVING question_count > 10;",
+    "pros": [
+      "Powerful multi-table queries",
+      "Aggregations without code",
+      "Flexible filtering"
+    ],
+    "cons": [
+      "Complex joins hurt performance",
+      "Implicit joins error-prone"
+    ],
+    "useCases": [
+      "Department question count report",
+      "Finding candidates with no sessions",
+      "Top-scoring sessions per technology"
+    ],
+    "tags": [
+      "mysql",
+      "joins",
+      "subquery",
+      "aggregation"
+    ]
+  },
+  {
+    "tech": "MySQL",
+    "level": "Mid-Level",
+    "title": "Indexing & Query Optimization",
+    "subtopics": [
+      "B-Tree index",
+      "Composite index",
+      "EXPLAIN ANALYZE",
+      "Covering index",
+      "Index selectivity",
+      "Slow query log"
+    ],
+    "codeSnippet": "-- Add composite index\nCREATE INDEX idx_sq_session_score ON session_questions(session_id, ai_score);\n-- EXPLAIN to verify\nEXPLAIN SELECT * FROM session_questions WHERE session_id = ? AND ai_score > 80;",
+    "pros": [
+      "Dramatic query speed improvement",
+      "Covering index eliminates row reads",
+      "Systematic with EXPLAIN"
+    ],
+    "cons": [
+      "Write overhead",
+      "Index bloat",
+      "Over-indexing"
+    ],
+    "useCases": [
+      "Speeding up interview history queries",
+      "Optimizing leaderboard query",
+      "Slow admin report fix"
+    ],
+    "tags": [
+      "mysql",
+      "indexing",
+      "performance",
+      "explain"
+    ]
+  },
+  {
+    "tech": "MySQL",
+    "level": "Senior",
+    "title": "Replication & High Availability",
+    "subtopics": [
+      "Primary-replica replication",
+      "GTID replication",
+      "Semi-synchronous replication",
+      "Failover",
+      "Read replicas",
+      "Binary log"
+    ],
+    "codeSnippet": "# my.cnf (primary)\nserver-id=1\nlog_bin=mysql-bin\nbinlog_format=ROW\ngtid_mode=ON\nenforce_gtid_consistency=ON",
+    "pros": [
+      "Read scalability via replicas",
+      "Disaster recovery",
+      "Zero-downtime failover"
+    ],
+    "cons": [
+      "Replication lag",
+      "Split-brain risk",
+      "Failover automation complexity"
+    ],
+    "useCases": [
+      "Interview platform read replica for reports",
+      "Replica lag alert for real-time leaderboard",
+      "GTID-based failover in production"
+    ],
+    "tags": [
+      "mysql",
+      "replication",
+      "ha",
+      "production"
+    ]
+  },
+  {
+    "tech": "MySQL",
+    "level": "Lead",
+    "title": "MySQL Architecture Strategy",
+    "subtopics": [
+      "Sharding strategies",
+      "ProxySQL",
+      "Schema versioning (Flyway/Liquibase)",
+      "Multi-tenancy patterns",
+      "Backup strategy"
+    ],
+    "codeSnippet": "# Flyway migration naming\nV1__create_users.sql\nV2__create_departments.sql\nV3__add_bulk_uploads.sql\nV4__add_voice_recordings.sql",
+    "pros": [
+      "Controlled schema evolution",
+      "Audit trail of changes",
+      "Zero-downtime migrations"
+    ],
+    "cons": [
+      "Sharding operational complexity",
+      "Schema governance discipline",
+      "Backup verification overhead"
+    ],
+    "useCases": [
+      "19-table schema migration for interview platform",
+      "Multi-tenant schema isolation",
+      "Org-wide Flyway standard"
+    ],
+    "tags": [
+      "mysql",
+      "architecture",
+      "sharding",
+      "flyway",
+      "lead"
+    ]
+  },
+  {
+    "tech": "PostgreSQL",
+    "level": "Fresher",
+    "title": "PostgreSQL Basics & Data Types",
+    "subtopics": [
+      "psql CLI",
+      "SERIAL/UUID primary keys",
+      "VARCHAR/TEXT/JSONB/ARRAY",
+      "Schemas",
+      "pg_dump"
+    ],
+    "codeSnippet": "CREATE TABLE questions (\n    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n    question_text TEXT NOT NULL,\n    difficulty VARCHAR(10) CHECK (difficulty IN ('EASY','MEDIUM','HARD')),\n    tags JSONB,\n    created_at TIMESTAMPTZ DEFAULT NOW()\n);",
+    "pros": [
+      "Rich data types (JSONB, Arrays)",
+      "UUID native support",
+      "Strong ACID"
+    ],
+    "cons": [
+      "More complex setup than MySQL",
+      "Steeper learning curve"
+    ],
+    "useCases": [
+      "Interview platform schema",
+      "JSONB for AI evaluation strengths/weaknesses",
+      "UUID PKs for distributed systems"
+    ],
+    "tags": [
+      "postgresql",
+      "basics",
+      "data-types"
+    ]
+  },
+  {
+    "tech": "PostgreSQL",
+    "level": "Junior",
+    "title": "JSONB & Advanced Queries",
+    "subtopics": [
+      "JSONB operators (->, ->>)",
+      "jsonb_array_elements",
+      "Full-text search (tsvector)",
+      "Window functions",
+      "CTEs (WITH clause)"
+    ],
+    "codeSnippet": "SELECT id, strengths->0 AS top_strength\nFROM ai_evaluations\nWHERE (strengths @> '[\"Strong understanding\"]');\n\nWITH ranked AS (\n    SELECT *, RANK() OVER (PARTITION BY technology_id ORDER BY score DESC) AS rnk\n    FROM session_results\n) SELECT * FROM ranked WHERE rnk <= 3;",
+    "pros": [
+      "Flexible schema with JSONB",
+      "Powerful analytics with window functions",
+      "No external search engine needed for basic FTS"
+    ],
+    "cons": [
+      "JSONB query optimization",
+      "JSONB index types (GIN)",
+      "FTS ranking complexity"
+    ],
+    "useCases": [
+      "Querying AI evaluation recommendations",
+      "Top 3 candidates per technology",
+      "Full-text question search"
+    ],
+    "tags": [
+      "postgresql",
+      "jsonb",
+      "window-functions",
+      "cte"
+    ]
+  },
+  {
+    "tech": "PostgreSQL",
+    "level": "Mid-Level",
+    "title": "Indexing & Performance",
+    "subtopics": [
+      "GIN (for JSONB/arrays)",
+      "GiST (for ranges)",
+      "Partial index",
+      "BRIN (for time-series)",
+      "EXPLAIN ANALYZE",
+      "pg_stat_statements"
+    ],
+    "codeSnippet": "CREATE INDEX idx_users_active ON users(email) WHERE status = 'ACTIVE';\nCREATE INDEX idx_eval_strengths ON ai_evaluations USING GIN(strengths);\nEXPLAIN (ANALYZE, BUFFERS) SELECT * FROM ai_evaluations WHERE strengths @> '[\"accuracy\"]';",
+    "pros": [
+      "Specialized index types",
+      "Partial indexes reduce size",
+      "Deep query analysis"
+    ],
+    "cons": [
+      "Index type selection complexity",
+      "Vacuum/autovacuum tuning"
+    ],
+    "useCases": [
+      "GIN index for JSONB evaluation search",
+      "Partial index for active candidates",
+      "Diagnosing slow report query"
+    ],
+    "tags": [
+      "postgresql",
+      "indexing",
+      "performance",
+      "explain"
+    ]
+  },
+  {
+    "tech": "PostgreSQL",
+    "level": "Senior",
+    "title": "Partitioning & Scalability",
+    "subtopics": [
+      "Range partitioning",
+      "List partitioning",
+      "Hash partitioning",
+      "pg_partman",
+      "Partition pruning",
+      "Logical replication"
+    ],
+    "codeSnippet": "CREATE TABLE interview_sessions (\n    id UUID, started_at TIMESTAMPTZ\n) PARTITION BY RANGE (started_at);\n\nCREATE TABLE interview_sessions_2025 PARTITION OF interview_sessions\n    FOR VALUES FROM ('2025-01-01') TO ('2026-01-01');",
+    "pros": [
+      "Query pruning on large tables",
+      "Efficient archival",
+      "Parallel query on partitions"
+    ],
+    "cons": [
+      "Complex partition key selection",
+      "Cross-partition query cost",
+      "Constraint management"
+    ],
+    "useCases": [
+      "Partitioning interview_sessions by year",
+      "Archiving old session data",
+      "Parallel analytics on evaluation history"
+    ],
+    "tags": [
+      "postgresql",
+      "partitioning",
+      "scalability",
+      "production"
+    ]
+  },
+  {
+    "tech": "PostgreSQL",
+    "level": "Lead",
+    "title": "PostgreSQL Operations at Scale",
+    "subtopics": [
+      "pgBouncer connection pooling",
+      "Streaming replication",
+      "Point-in-time recovery (PITR)",
+      "Logical replication",
+      "pg_upgrade",
+      "pg_stat_* views"
+    ],
+    "codeSnippet": "# pgbouncer.ini\n[databases]\ninterview_platform = host=primary port=5432\n[pgbouncer]\npool_mode = transaction\nmax_client_conn = 1000\ndefault_pool_size = 20",
+    "pros": [
+      "Connection scalability via pooling",
+      "PITR for disaster recovery",
+      "Zero-downtime major version upgrades"
+    ],
+    "cons": [
+      "pgBouncer + prepared statements conflict",
+      "Logical replication setup complexity",
+      "Streaming replication monitoring overhead"
+    ],
+    "useCases": [
+      "pgBouncer for 1000-concurrent-session interview platform",
+      "PITR recovery from accidental delete",
+      "Logical replication for live DB migration"
+    ],
+    "tags": [
+      "postgresql",
+      "operations",
+      "pgbouncer",
+      "replication",
+      "lead"
+    ]
+  },
+  {
+    "tech": "MongoDB",
+    "level": "Fresher",
+    "title": "Documents & Collections",
+    "subtopics": [
+      "JSON/BSON documents",
+      "Collections",
+      "insertOne/insertMany",
+      "find/findOne",
+      "ObjectId",
+      "Projection"
+    ],
+    "codeSnippet": "db.questions.insertOne({\n    question_text: 'What is MVVM?',\n    technology: 'Android',\n    difficulty: 'MEDIUM',\n    tags: ['architecture','android'],\n    created_at: new Date()\n});",
+    "pros": [
+      "Schema flexibility",
+      "Native JSON",
+      "Horizontal scaling"
+    ],
+    "cons": [
+      "No joins (use aggregation)",
+      "Eventual consistency risk",
+      "Document size limit (16MB)"
+    ],
+    "useCases": [
+      "Interview question document store",
+      "User activity log",
+      "Flexible config store"
+    ],
+    "tags": [
+      "mongodb",
+      "basics",
+      "documents"
+    ]
+  },
+  {
+    "tech": "MongoDB",
+    "level": "Junior",
+    "title": "Aggregation Pipeline",
+    "subtopics": [
+      "$match",
+      "$group",
+      "$project",
+      "$lookup",
+      "$unwind",
+      "$sort",
+      "$limit"
+    ],
+    "codeSnippet": "db.session_questions.aggregate([\n    { $match: { ai_score: { $gte: 80 } } },\n    { $group: { _id: '$technology_id', avgScore: { $avg: '$ai_score' }, count: { $sum: 1 } } },\n    { $sort: { avgScore: -1 } },\n    { $limit: 10 }\n]);",
+    "pros": [
+      "Powerful data transformation",
+      "In-DB computation",
+      "Replaces joins for embedded data"
+    ],
+    "cons": [
+      "Complex pipeline debugging",
+      "$lookup not as efficient as SQL join"
+    ],
+    "useCases": [
+      "Top-scoring technologies report",
+      "Candidate progress aggregation",
+      "Interview session analytics"
+    ],
+    "tags": [
+      "mongodb",
+      "aggregation",
+      "pipeline"
+    ]
+  },
+  {
+    "tech": "MongoDB",
+    "level": "Mid-Level",
+    "title": "Indexing & Schema Design",
+    "subtopics": [
+      "Single field index",
+      "Compound index",
+      "Text index",
+      "TTL index",
+      "Embedded vs referenced documents",
+      "Schema validation"
+    ],
+    "codeSnippet": "db.sessions.createIndex({ createdAt: 1 }, { expireAfterSeconds: 86400 });\ndb.questions.createIndex({ technology: 1, difficulty: 1, status: 1 });",
+    "pros": [
+      "TTL auto-cleanup",
+      "Flexible schema evolution",
+      "Embedding for read performance"
+    ],
+    "cons": [
+      "Index bloat",
+      "Embedding vs referencing tradeoffs",
+      "No multi-document ACID by default"
+    ],
+    "useCases": [
+      "Auto-expiring OTP tokens",
+      "Question search optimization",
+      "Embedded evaluation in session document"
+    ],
+    "tags": [
+      "mongodb",
+      "indexing",
+      "schema-design",
+      "performance"
+    ]
+  },
+  {
+    "tech": "MongoDB",
+    "level": "Senior",
+    "title": "Replica Sets & Sharding",
+    "subtopics": [
+      "Replica set (primary/secondary/arbiter)",
+      "Read preferences",
+      "Write concern",
+      "Shard key selection",
+      "Chunk balancing",
+      "mongos router"
+    ],
+    "codeSnippet": "db.sessions.insertOne(doc, { writeConcern: { w: 'majority', j: true } });\ndb.sessions.find({}).readPref('secondaryPreferred')",
+    "pros": [
+      "Automatic failover",
+      "Read scalability",
+      "Horizontal scaling with sharding"
+    ],
+    "cons": [
+      "Shard key selection is hard to change",
+      "Sharding operational overhead",
+      "Majority write concern increases latency"
+    ],
+    "useCases": [
+      "Interview platform analytics on secondary",
+      "Sharding session_questions by candidate_id",
+      "Replica set failover during deployment"
+    ],
+    "tags": [
+      "mongodb",
+      "sharding",
+      "replica-sets",
+      "ha"
+    ]
+  },
+  {
+    "tech": "MongoDB",
+    "level": "Lead",
+    "title": "MongoDB Architecture Strategy",
+    "subtopics": [
+      "Multi-cloud clusters",
+      "Atlas Data Lake",
+      "Change Streams",
+      "Event-driven architecture with MongoDB",
+      "Performance at scale"
+    ],
+    "codeSnippet": "const changeStream = db.sessions.watch();\nchangeStream.on('change', next => {\n    if(next.operationType === 'insert') notifyUser(next.fullDocument);\n});",
+    "pros": [
+      "Real-time event triggers",
+      "Fully managed scaling (Atlas)",
+      "Seamless analytics integration"
+    ],
+    "cons": [
+      "Cost of Atlas at scale",
+      "Complex operational footprint if self-managed"
+    ],
+    "useCases": [
+      "Real-time leaderboard updates using Change Streams",
+      "Syncing MongoDB to data warehouse",
+      "Multi-region global clusters"
+    ],
+    "tags": [
+      "mongodb",
+      "architecture",
+      "change-streams",
+      "lead"
+    ]
+  }
+]

@@ -1,10 +1,11 @@
 package com.interview.platform.mod01_authentication;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.Map;
 
 @RestController
+@RequestMapping("/api/v1/auth")
 public class JwtTokenManagementController {
 
     private final JwtTokenManagementService service;
@@ -13,13 +14,15 @@ public class JwtTokenManagementController {
         this.service = service;
     }
 
-    @RequestMapping(value = "/**", method = {
-        org.springframework.web.bind.annotation.RequestMethod.GET, 
-        org.springframework.web.bind.annotation.RequestMethod.POST, 
-        org.springframework.web.bind.annotation.RequestMethod.PUT, 
-        org.springframework.web.bind.annotation.RequestMethod.DELETE, 
-        org.springframework.web.bind.annotation.RequestMethod.PATCH})
-    public ResponseEntity<?> handleAll() {
-        return ResponseEntity.status(service.handle()).build();
+    @PostMapping("/token/refresh")
+    public ResponseEntity<?> refresh(@RequestBody Map<String, String> body) {
+        service.refreshToken(body.get("refreshToken"));
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestBody Map<String, String> body) {
+        service.logout(body.get("refreshToken"));
+        return ResponseEntity.ok().build();
     }
 }

@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "com.interview.platform.app-release-58:/xml_data_extraction_rules.xml.flat",
+        "source": "com.interview.platform.app-main-59:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.interview.platform.app-release-58:/drawable_ic_launcher.xml.flat",
+        "source": "com.interview.platform.app-main-59:/drawable/ic_launcher.xml"
+    },
+    {
+        "merged": "com.interview.platform.app-release-58:/xml_backup_rules.xml.flat",
+        "source": "com.interview.platform.app-main-59:/xml/backup_rules.xml"
+    }
+]

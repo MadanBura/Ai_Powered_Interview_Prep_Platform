@@ -12,14 +12,4 @@ public class FileStorageController {
     public FileStorageController(FileStorageService service) {
         this.service = service;
     }
-
-    @RequestMapping(value = "/**", method = {
-        org.springframework.web.bind.annotation.RequestMethod.GET, 
-        org.springframework.web.bind.annotation.RequestMethod.POST, 
-        org.springframework.web.bind.annotation.RequestMethod.PUT, 
-        org.springframework.web.bind.annotation.RequestMethod.DELETE, 
-        org.springframework.web.bind.annotation.RequestMethod.PATCH})
-    public ResponseEntity<?> handleAll() {
-        return ResponseEntity.status(service.handle()).build();
-    }
 }

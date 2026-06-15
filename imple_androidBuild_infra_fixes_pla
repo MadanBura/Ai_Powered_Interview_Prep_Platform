@@ -1,0 +1,65 @@
+# Implementation Plan: Android Build Infrastructure
+
+This plan outlines the steps to generate the missing Android infrastructure files, convert dependencies to use Version Catalogs (`libs.versions.toml`), and set up the entry points to make the existing Android candidate app buildable.
+
+## User Review Required
+
+> [!WARNING]
+> **KSP vs KAPT Migration**
+> The existing `build.gradle.kts` uses `kotlin-kapt` for Hilt and Room. Since you explicitly requested `KSP configured` in your instructions, I will migrate all `kapt` configurations (Hilt, Room) to use Google's KSP (Kotlin Symbol Processing). This requires updating the Gradle plugins and substituting `kapt` calls with `ksp`. Is this migration approved?
+
+## 1. Missing Files Report
+
+Based on an analysis of the `android-app/` directory, the following critical infrastructure files are completely missing:
+- `gradle/libs.versions.toml`
+- `gradle/wrapper/gradle-wrapper.properties` and wrapper scripts (`gradlew`, `gradlew.bat`)
+- `gradle.properties`
+- `app/src/main/AndroidManifest.xml`
+- `app/src/main/res/values/strings.xml`, `colors.xml`, `themes.xml`
+- Application Entry Point: `MyApp.kt` (annotated with `@HiltAndroidApp`)
+- Activity Entry Point: `MainActivity.kt` (annotated with `@AndroidEntryPoint`)
+
+## 2. Missing Dependencies Report
+- Jetpack Compose dependencies are missing from the `app/build.gradle.kts` (e.g., `ui`, `material3`, `ui-tooling-preview`, `activity-compose`, `navigation-compose`).
+- KSP Plugin definition.
+- Standard AndroidX libraries (`core-ktx`, `lifecycle-runtime-ktx`).
+
+## 3. Proposed Changes
+
+### Phase 1: Gradle Wrapper & Properties Setup
+- Use `gradle wrapper` command (if system gradle is available) or generate the wrapper files to initialize Gradle 8.4+.
+- Generate `gradle.properties` (with `android.useAndroidX=true`, `android.nonTransitiveRClass=true`).
+
+### Phase 2: Version Catalog Migration (`libs.versions.toml`)
+- Create `android-app/gradle/libs.versions.toml` defining:
+  - Plugins: AGP (8.2.0), Kotlin (1.9.22), KSP (1.9.22-1.0.17), Hilt (2.50).
+  - Libraries: Retrofit, OkHttp, Room, Hilt, Coroutines, Compose Material 3, Navigation Compose, DataStore, Timber.
+
+### Phase 3: Gradle Script Updates
+- Update `android-app/settings.gradle.kts` to enable version catalogs.
+- Update `android-app/build.gradle.kts` (Root) to load plugins via alias.
+- Update `android-app/app/build.gradle.kts` to use KSP instead of KAPT and declare dependencies using the `libs.*` syntax.
+
+### Phase 4: Application Manifest & Resources
+- Generate `app/src/main/AndroidManifest.xml` referencing `.MyApp` and `.MainActivity`.
+- Generate minimal `res/values/strings.xml`, `colors.xml`, and `themes.xml`.
+
+### Phase 5: Code Entry Points
+- Generate `MyApp.kt`:
+```kotlin
+@HiltAndroidApp
+class MyApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        Timber.plant(Timber.DebugTree())
+    }
+}
+```
+- Generate `MainActivity.kt` containing the root Navigation graph for Jetpack Compose.
+
+## 4. Verification Plan
+Once the scripts generate the missing files and configurations, I will run:
+```bash
+cd android-app && ./gradlew assembleDebug
+```
+The expected output must yield `BUILD SUCCESSFUL`.
