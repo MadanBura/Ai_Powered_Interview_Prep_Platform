@@ -3,8 +3,8 @@ import { AnalyticsRequestDto, AnalyticsResponseDto } from '../types/analytics.ty
 
 export const analyticsService = {
 
-  async getPlatformMetrics(): Promise<AnalyticsResponseDto> {
-    const response = await axiosClient.get<AnalyticsResponseDto>(`/api/v1/admin/analytics/platform`);
+  async getPlatformMetrics(date?: string): Promise<AnalyticsResponseDto> {
+    const response = await axiosClient.get<AnalyticsResponseDto>(`/api/v1/admin/analytics/platform`, { params: { date } });
     return response.data;
   },
 };

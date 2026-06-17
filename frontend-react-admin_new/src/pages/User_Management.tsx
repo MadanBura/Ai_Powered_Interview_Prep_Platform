@@ -154,17 +154,21 @@ export default function User_Management() {
 <DataTable 
   columns={[
     { key: 'checkbox', header: '', render: () => <input className="rounded text-primary focus:ring-primary border-outline-variant" type="checkbox"/> },
-    { key: 'user', header: 'User', render: (row: any) => (
+    { key: 'user', header: 'User', render: (row: any) => {
+      const displayName = row.name === 'Unknown' && row.email ? row.email.split('@')[0] : row.name;
+      const displayInitial = row.name === 'Unknown' && row.email ? row.email.charAt(0).toUpperCase() : row.initial;
+      return (
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 rounded-full bg-primary-container/20 flex items-center justify-center text-primary font-bold overflow-hidden">
-          {row.initial}
+          {displayInitial}
         </div>
         <div>
-          <p className="font-body-md text-body-md text-on-surface font-semibold">{row.name}</p>
+          <p className="font-body-md text-body-md text-on-surface font-semibold">{displayName}</p>
           <p className="text-[12px] text-on-surface-variant leading-tight">{row.email}</p>
         </div>
       </div>
-    ) },
+      );
+    } },
     { key: 'role', header: 'Role' },
     { key: 'dept', header: 'Department' },
     { key: 'lastLogin', header: 'Last Login', render: () => <span className="text-body-md text-on-surface-variant">Just now</span> },

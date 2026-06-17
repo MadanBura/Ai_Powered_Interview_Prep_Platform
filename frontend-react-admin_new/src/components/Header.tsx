@@ -24,7 +24,10 @@ export default function Header() {
   };
   
   // Safe fallback if data is still loading or not available
-  const name = data?.data?.name || 'Loading...';
+  let name = data?.data?.name || 'Loading...';
+  if (name === 'Unknown' && data?.data?.email) {
+    name = data.data.email.split('@')[0];
+  }
   const role = data?.data?.role === 'SUPER_ADMIN' ? 'Super Admin' : (data?.data?.role || 'Admin');
 
   return (

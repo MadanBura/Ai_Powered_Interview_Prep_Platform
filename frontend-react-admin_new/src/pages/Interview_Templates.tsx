@@ -20,7 +20,7 @@ export default function Interview_Templates() {
 
   return (
     <>
-      
+      <div className="p-8 max-w-container-max mx-auto w-full flex-1 flex flex-col gap-6">
 
 
 
@@ -196,7 +196,7 @@ export default function Interview_Templates() {
     <div className="flex flex-col gap-1.5"><label className="text-label-md font-bold">Status</label><select className="w-full px-4 py-2 border border-outline-variant rounded"><option>All</option><option>Active</option><option>Draft</option></select></div>
   </div>
 </Modal>
-
+      </div>
     </>
   );
 }

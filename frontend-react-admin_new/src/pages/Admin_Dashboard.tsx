@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useRetrieveAdminDashboard } from '../features/mod18_dashboard/hooks/queries/useRetrieveAdminDashboard';
 import { useGetPlatformMetrics } from '../features/mod20_analytics/hooks/queries/useGetPlatformMetrics';
 import toast from 'react-hot-toast';
@@ -12,10 +13,12 @@ import { useGetDashboardCharts } from '../features/mod18_dashboard/hooks/queries
 import { useGetRecentActivity } from '../features/mod18_dashboard/hooks/queries/useGetRecentActivity';
 
 export default function Admin_Dashboard() {
-  const { data: dashboardData, isLoading: isDashboardLoading } = useRetrieveAdminDashboard();
-  const { data: metricsData, isLoading: isMetricsLoading } = useGetPlatformMetrics();
-  const { data: chartsData, isLoading: isChartsLoading } = useGetDashboardCharts();
-  const { data: activityDataResp, isLoading: isActivityLoading } = useGetRecentActivity();
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+
+  const { data: dashboardData, isLoading: isDashboardLoading } = useRetrieveAdminDashboard(selectedDate);
+  const { data: metricsData, isLoading: isMetricsLoading } = useGetPlatformMetrics(selectedDate);
+  const { data: chartsData, isLoading: isChartsLoading } = useGetDashboardCharts(selectedDate);
+  const { data: activityDataResp, isLoading: isActivityLoading } = useGetRecentActivity(selectedDate);
 
   const totalCandidates = (dashboardData as any)?.data?.totalCandidates || '0';
   const totalQuestions = (dashboardData as any)?.data?.totalQuestions || '0';
@@ -55,7 +58,7 @@ export default function Admin_Dashboard() {
     <>
       <div className="flex items-center bg-surface border border-outline-variant rounded-lg px-2 py-1 gap-2 cursor-pointer hover:bg-surface-container-low transition-colors">
         <span className="material-symbols-outlined text-[20px] text-on-surface-variant ml-2">calendar_today</span>
-        <input type="date" className="bg-transparent border-none outline-none font-label-md text-label-md text-on-surface cursor-pointer" defaultValue={new Date().toISOString().split('T')[0]} />
+        <input type="date" className="bg-transparent border-none outline-none font-label-md text-label-md text-on-surface cursor-pointer" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
       </div>
       <Button icon="download" onClick={handleExportReport}>EXPORT REPORT</Button>
     </>

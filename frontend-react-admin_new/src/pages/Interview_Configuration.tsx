@@ -72,7 +72,7 @@ export default function Interview_Configuration() {
 
   return (
     <>
-      
+      <div className="p-8 max-w-container-max mx-auto w-full flex-1 flex flex-col gap-6">
 
 
 
@@ -330,7 +330,7 @@ export default function Interview_Configuration() {
     </div>
   </div>
 </Modal>
-
+      </div>
     </>
   );
 }
