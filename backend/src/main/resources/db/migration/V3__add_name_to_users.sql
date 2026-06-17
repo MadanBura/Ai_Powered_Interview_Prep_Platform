@@ -1,2 +1,0 @@
-ALTER TABLE users ADD COLUMN name VARCHAR(255) AFTER id;
-UPDATE users SET name = SUBSTRING_INDEX(email, '@', 1) WHERE name IS NULL;
