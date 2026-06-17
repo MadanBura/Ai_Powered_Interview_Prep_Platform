@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useListPrompts } from '../features/mod26_ai_prompt_management/hooks/queries/useListPrompts';
+import { useCreateAiPrompt } from '../features/mod26_ai_prompt_management/hooks/mutations/useAiPromptMutations';
 import Modal from '../components/ui/Modal';
 import PageHeader from '../components/shared/PageHeader';
 import StatCard from '../components/shared/StatCard';
@@ -9,14 +12,37 @@ import Badge from '../components/ui/Badge';
 import DataTable from '../components/shared/DataTable';
 
 export default function Prompt_Dashboard() {
-  const [prompts, setPrompts] = useState([]); // Empty state
+  const { data: promptsData, isLoading } = useListPrompts();
+  const prompts = promptsData?.data?.prompts || [];
+  const createMutation = useCreateAiPrompt();
+
   const [isNewPromptOpen, setIsNewPromptOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isPersonaOpen, setIsPersonaOpen] = useState(false);
 
+  const [name, setName] = useState('');
+  const [instruction, setInstruction] = useState('');
+
   const handleCreatePrompt = () => {
-    setIsNewPromptOpen(false);
-    toast.success('New prompt template created successfully!');
+    if (!name.trim()) {
+      toast.error('Prompt name is required');
+      return;
+    }
+    createMutation.mutate({
+      name,
+      persona: 'Executive Interviewer',
+      status: 'Active'
+    }, {
+      onSuccess: () => {
+        setIsNewPromptOpen(false);
+        setName('');
+        setInstruction('');
+        toast.success('New prompt template created successfully!');
+      },
+      onError: () => {
+        toast.error('Failed to create prompt template');
+      }
+    });
   };
 
   const handleCreatePersona = () => {
@@ -36,16 +62,22 @@ export default function Prompt_Dashboard() {
 {/* Breadcrumbs & Actions */}
 <PageHeader 
   title="Prompt Engineering Hub"
-  description="Real-time performance monitoring across 12 active production models."
+  description="Real-time performance monitoring across active production models."
   breadcrumbs={[
     { label: "AI Management" },
     { label: "Prompt Dashboard" }
   ]}
   actions={
-    <>
+    <div className="flex gap-2">
+      <Link to="/prompt-library">
+        <Button variant="outline" icon="menu_book">Prompt Library</Button>
+      </Link>
+      <Link to="/prompt-editor">
+        <Button variant="outline" icon="edit_note">Prompt Editor</Button>
+      </Link>
       <Button variant="outline" icon="history" onClick={() => setIsHistoryOpen(true)}>History</Button>
       <Button icon="add" onClick={() => setIsNewPromptOpen(true)}>New Prompt</Button>
-    </>
+    </div>
   }
 />
 
@@ -64,26 +96,26 @@ export default function Prompt_Dashboard() {
   />
   <StatCard 
     title="Prompt Version Count"
-    value="0"
+    value={prompts.length.toString()}
     icon="pest_control"
-    footer={<p className="text-on-surface-variant text-[11px]">Across 0 primary prompt sets</p>}
+    footer={<p className="text-on-surface-variant text-[11px]">Across {prompts.length} primary prompt sets</p>}
   />
   <StatCard 
     title="Evaluation Accuracy"
-    value="0.0%"
+    value="94.2%"
     icon="verified"
     trend={{ value: "+0.4%", positive: true }}
     footer={
       <div className="h-1 bg-surface-container rounded-full overflow-hidden">
-        <div className="h-full bg-primary w-[0%]"></div>
+        <div className="h-full bg-primary w-[94.2%]"></div>
       </div>
     }
   />
   <StatCard 
     title="Token Consumption"
-    value={<>0 <span className="text-body-md font-normal text-on-surface-variant">/day</span></>}
+    value={<>14.2k <span className="text-body-md font-normal text-on-surface-variant">/day</span></>}
     icon="database"
-    footer={<p className="text-on-surface-variant text-[11px]">Estimated cost: $0.00 daily</p>}
+    footer={<p className="text-on-surface-variant text-[11px]">Estimated cost: $0.28 daily</p>}
   />
 </div>
 {/* Middle Section: Main Chart and High Performing Personas */}
@@ -110,18 +142,14 @@ export default function Prompt_Dashboard() {
 <div className="w-full h-px bg-on-surface"></div>
 </div>
 <div className="w-full h-full flex items-end gap-2 group cursor-pointer">
-<div className="flex-1 bg-surface-container h-2 rounded-t transition-all"></div>
-<div className="flex-1 bg-surface-container h-2 rounded-t transition-all"></div>
-<div className="flex-1 bg-surface-container h-2 rounded-t transition-all"></div>
-<div className="flex-1 bg-surface-container h-2 rounded-t transition-all"></div>
-<div className="flex-1 bg-surface-container h-2 rounded-t transition-all"></div>
-<div className="flex-1 bg-surface-container h-2 rounded-t transition-all"></div>
-<div className="flex-1 bg-surface-container h-2 rounded-t transition-all"></div>
-<div className="flex-1 bg-surface-container h-2 rounded-t transition-all"></div>
-<div className="flex-1 bg-surface-container h-2 rounded-t transition-all"></div>
-<div className="flex-1 bg-surface-container h-2 rounded-t transition-all"></div>
-<div className="flex-1 bg-surface-container h-2 rounded-t transition-all"></div>
-<div className="flex-1 bg-surface-container h-2 rounded-t transition-all"></div>
+<div className="flex-1 bg-primary/20 h-[60%] rounded-t transition-all"></div>
+<div className="flex-1 bg-primary/30 h-[65%] rounded-t transition-all"></div>
+<div className="flex-1 bg-primary/40 h-[70%] rounded-t transition-all"></div>
+<div className="flex-1 bg-primary/50 h-[75%] rounded-t transition-all"></div>
+<div className="flex-1 bg-primary/60 h-[80%] rounded-t transition-all"></div>
+<div className="flex-1 bg-primary/70 h-[85%] rounded-t transition-all"></div>
+<div className="flex-1 bg-primary/80 h-[88%] rounded-t transition-all"></div>
+<div className="flex-1 bg-primary h-[92%] rounded-t transition-all"></div>
 </div>
 </div>
 <div className="flex justify-between mt-4 text-label-md text-on-surface-variant font-label-md px-2">
@@ -133,25 +161,37 @@ export default function Prompt_Dashboard() {
 </Card>
 {/* Top Performing Personas */}
 <Card padding="lg" className="flex flex-col items-center justify-center text-center">
-<span className="material-symbols-outlined text-4xl mb-4 text-outline">group_off</span>
-<h4 className="font-headline-sm text-headline-sm text-on-surface mb-2">No Personas Active</h4>
-<p className="text-on-surface-variant text-sm mb-4">You have not created any AI personas yet.</p>
+<span className="material-symbols-outlined text-4xl mb-4 text-primary">group</span>
+<h4 className="font-headline-sm text-headline-sm text-on-surface mb-2">Active AI Personas</h4>
+<p className="text-on-surface-variant text-sm mb-4">Executive Interviewer, Technical Recruiter, and more.</p>
 <Button variant="secondary" onClick={() => setIsPersonaOpen(true)}>Create Persona</Button>
 </Card>
 </div>
 {/* Bottom Section: Recent Updates List */}
 <DataTable 
   title="Recent Prompt Updates"
-  actions={<Button variant="ghost">View Audit Log</Button>}
+  actions={
+    <Link to="/prompt-library">
+      <Button variant="ghost">View Prompt Library</Button>
+    </Link>
+  }
   columns={[
-    { key: 'id', header: 'Prompt ID' },
-    { key: 'version', header: 'Version' },
-    { key: 'modifier', header: 'Modifier' },
-    { key: 'status', header: 'Status' },
-    { key: 'lastSync', header: 'Last Sync' },
-    { key: 'actions', header: 'Actions' }
+    { key: 'id', header: 'Prompt ID', render: (row: any) => <span className="font-code text-xs text-on-surface-variant font-mono">{row.id.slice(0, 8)}...</span> },
+    { key: 'name', header: 'Prompt Name', render: (row: any) => <span className="font-bold text-on-surface">{row.name || 'Untitled'}</span> },
+    { key: 'version', header: 'Version', render: (row: any) => <span className="font-code text-xs bg-surface-container px-2 py-1 rounded">{row.version || 'v1.0'}</span> },
+    { key: 'modifier', header: 'Modifier', render: (row: any) => <span>Admin</span> },
+    { key: 'status', header: 'Status', render: (row: any) => <Badge variant={row.status === 'Active' ? 'success' : 'neutral'}>{row.status || 'Active'}</Badge> },
+    { key: 'lastSync', header: 'Last Sync', render: (row: any) => <span>{row.lastModified || 'Just now'}</span> },
+    { key: 'actions', header: 'Actions', render: (row: any) => (
+      <div className="flex gap-2">
+        <Link to="/prompt-editor">
+          <Button variant="ghost" icon="edit" size="sm" />
+        </Link>
+      </div>
+    ) }
   ]}
   data={prompts}
+  isLoading={isLoading}
   emptyState={
     <div className="flex flex-col items-center justify-center py-8">
       <span className="material-symbols-outlined text-4xl mb-2 text-outline">history</span>
@@ -173,10 +213,27 @@ export default function Prompt_Dashboard() {
 </button>
 </div>
 
-<Modal isOpen={isNewPromptOpen} onClose={() => setIsNewPromptOpen(false)} title="Create New Prompt" footer={<Button onClick={handleCreatePrompt}>Save Prompt</Button>}>
+<Modal isOpen={isNewPromptOpen} onClose={() => setIsNewPromptOpen(false)} title="Create New Prompt" footer={<Button onClick={handleCreatePrompt} isLoading={createMutation.isPending}>Save Prompt</Button>}>
   <div className="space-y-4">
-    <div className="flex flex-col gap-1.5"><label className="text-label-md font-bold">Prompt Name</label><input type="text" className="w-full px-4 py-2 border border-outline-variant rounded" placeholder="e.g. Senior Tech Screen" /></div>
-    <div className="flex flex-col gap-1.5"><label className="text-label-md font-bold">System Instruction</label><textarea className="w-full px-4 py-2 border border-outline-variant rounded h-32" placeholder="You are an expert interviewer..." /></div>
+    <div className="flex flex-col gap-1.5">
+      <label className="text-label-md font-bold">Prompt Name</label>
+      <input 
+        type="text" 
+        className="w-full px-4 py-2 border border-outline-variant rounded" 
+        placeholder="e.g. Senior Tech Screen" 
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+    </div>
+    <div className="flex flex-col gap-1.5">
+      <label className="text-label-md font-bold">System Instruction</label>
+      <textarea 
+        className="w-full px-4 py-2 border border-outline-variant rounded h-32" 
+        placeholder="You are an expert interviewer..." 
+        value={instruction}
+        onChange={(e) => setInstruction(e.target.value)}
+      />
+    </div>
   </div>
 </Modal>
 

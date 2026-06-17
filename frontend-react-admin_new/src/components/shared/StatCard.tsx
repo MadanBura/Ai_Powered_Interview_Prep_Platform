@@ -5,6 +5,7 @@ export interface StatCardProps {
   title: string;
   value: React.ReactNode;
   icon?: string;
+  iconColor?: string;
   trend?: {
     value: string;
     label?: string;
@@ -14,12 +15,12 @@ export interface StatCardProps {
   footer?: React.ReactNode;
 }
 
-export default function StatCard({ title, value, icon, trend, badge, footer }: StatCardProps) {
+export default function StatCard({ title, value, icon, iconColor, trend, badge, footer }: StatCardProps) {
   return (
     <Card hoverable className="flex flex-col gap-1">
       <div className="flex justify-between items-start mb-2">
         {icon ? (
-          <div className="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+          <div className="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary" style={iconColor ? { color: iconColor } : undefined}>
             <span className="material-symbols-outlined">{icon}</span>
           </div>
         ) : (

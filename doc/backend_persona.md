@@ -3,7 +3,7 @@
 ## System Profile
 - **Framework:** Spring Boot 3
 - **Language:** Java 21
-- **DB:** PostgreSQL (Relational) + Redis (Cache/Rate Limiting) + Elasticsearch (Search Index)
+- **DB:** MySQL (Relational) + Redis (Cache/Rate Limiting) + Elasticsearch (Search Index)
 - **Auth model:** Stateless JWT (JSON Web Tokens) with OTP for candidate verification and Role-Based Access Control (RBAC).
 
 ## Validation Layer
@@ -25,28 +25,30 @@
   ```
 - **Constraints:** Jakarta Bean Validation (Hibernate Validator) applied at controller level via `@Valid`. Global `@ControllerAdvice` maps `MethodArgumentNotValidException` to standard 400 JSON schemas.
 
-## Database Schema (PostgreSQL)
+## Database Schema (MySQL)
 - **Tables with UUID primary keys:**
   ```sql
   CREATE TABLE users (
-      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
       email VARCHAR(255) UNIQUE NOT NULL,
       role VARCHAR(50) NOT NULL,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );
 
   CREATE TABLE departments (
-      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
       name VARCHAR(255) NOT NULL,
       subdomain VARCHAR(255) NOT NULL
   );
 
   CREATE TABLE interview_sessions (
-      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-      candidate_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-      department_id UUID NOT NULL REFERENCES departments(id),
+      id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+      candidate_id VARCHAR(36) NOT NULL,
+      department_id VARCHAR(36) NOT NULL,
       status VARCHAR(50) NOT NULL,
-      started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (candidate_id) REFERENCES users(id) ON DELETE CASCADE,
+      FOREIGN KEY (department_id) REFERENCES departments(id)
   );
   ```
 - **Foreign keys:** Strictly enforced with appropriate `ON DELETE CASCADE` or `RESTRICT` rules to maintain referential integrity.
@@ -90,8 +92,8 @@
 - **RPO / RTO:** 
   - Recovery Point Objective (RPO): 1 Hour (Transaction log backups).
   - Recovery Time Objective (RTO): 4 Hours.
-- **Backup strategy:** Automated daily RDS snapshots + Continuous WAL (Write-Ahead Logging) archiving to S3.
-- **Replication:** Multi-AZ (Availability Zone) deployment for PostgreSQL.
+- **Backup strategy:** Automated daily RDS snapshots + Continuous Binlog (Binary Log) archiving to S3.
+- **Replication:** Multi-AZ (Availability Zone) deployment for MySQL.
 
 ## Async Jobs
 - **Job list with triggers:**

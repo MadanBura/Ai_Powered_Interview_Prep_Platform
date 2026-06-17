@@ -569,6 +569,36 @@ FORMATTING RULES
 
 ---
 
+## PROMPT 7.1 — Generate Debug Persona
+
+**Output File:** `doc/Debug_Persona.md`
+
+---
+### Prompt Content (Verbatim)
+
+````text
+System Role: You are a Principal Systems Architect and Troubleshooting Expert.
+
+Task: Generate a Debug Persona document that outlines systematic root-cause analysis, actionable debugging steps, and verification procedures for Android, React Frontend, and Spring Boot backend technologies.
+
+Context: 
+Project Context: @[Project_Context.md]
+
+Output Structure:
+# Debug Persona
+
+## Android Debug Persona
+...
+## React Frontend Debug Persona
+...
+## Spring Boot Debug Persona
+...
+## General Rules for All Debug Personas
+...
+````
+
+---
+
 ## PROMPT 8 — Generate Module Documentation Package
 
 **Output File:** `doc/modules/module-*/` (Multiple files)
@@ -827,4 +857,99 @@ please fix these and some screen shows blank screen fix them also
 
 ---
 
+## PROMPT 20 — Fix Android UI and Layout Inconsistencies
 
+**Output File:** `android-app/app/src/main/java/com/interview/platform/ui/screens/*`
+
+---
+### Prompt Content (Verbatim)
+
+```text
+System Role: Lead Mobile UI/UX Engineer
+
+Task: Review the Android mobile screens generated from Stitch against Figma designs. Some screens are displaying a double bottom bar and blank screens. 
+
+Requirements:
+- Fix all non-functional widgets, buttons, and UI components.
+- Resolve double bottom bars and blank screen layout inconsistencies.
+- Ensure the current mobile UI accurately reflects the Stitch/Figma designs and preserves responsive behavior.
+```
+
+---
+
+## PROMPT 21 — Resolve Spring Boot CORS Configuration Issue
+
+**Output File:** `backend/src/main/java/com/interview/platform/config/SecurityConfig.java`
+
+---
+### Prompt Content (Verbatim)
+
+```text
+System Role: Principal Java Backend Engineer
+
+Task: Fix frontend API integration failures resulting from missing CORS configuration in the Spring Boot backend. 
+
+Requirements:
+- Analyze `SecurityConfig.java` to identify why OPTIONS preflight requests fail.
+- Implement a `CorsConfigurationSource` bean allowing methods (GET, POST, PUT, DELETE, OPTIONS) and local origins.
+- Fix 401/403 unauthorized errors blocking API CRUD operations.
+```
+
+---
+
+## PROMPT 22 — Fix Android Interview Timer and Voice Recording
+
+**Output File:** `android-app/app/src/main/java/com/interview/platform/ui/screens/mod09_interview_session/*`
+
+---
+### Prompt Content (Verbatim)
+
+```text
+System Role: Senior Android Engineer
+
+Task: Fix the interview session timer and voice recording features. Currently, the timer is not counting and recording is not happening.
+
+Requirements:
+- Investigate StateFlow timer emissions in the ViewModel.
+- Fix MediaRecorder/AudioRecord integration for capturing candidate responses.
+- Ensure the UI correctly reflects active recording states and countdowns.
+```
+
+---
+
+## PROMPT 23 — Update Spring Boot Mock Services and OTP Bypass
+
+**Output File:** `backend/src/main/java/com/interview/platform/mod01_authentication/OtpLoginService.java` and `backend/src/main/java/com/interview/platform/mod08_categorization_engine/CategorizationEngineService.java`
+
+---
+### Prompt Content (Verbatim)
+
+```text
+System Role: Principal Backend Architect
+
+Task: Fix issues where backend services return empty collections and OTP fails for new test admins.
+
+Requirements:
+- Bypass strict OTP blocks for development by auto-provisioning non-existing admins in `OtpLoginService.java`.
+- Update mock services (like `CategorizationEngineService`) to return structured mock DTO arrays rather than empty HashMaps so the UI can render correctly until the full DB is wired.
+```
+
+---
+
+## PROMPT 24 — Fix Backend Form Validation and Missing CRUD Logic
+
+**Output File:** `backend/src/main/java/com/interview/platform/mod03_department/DepartmentController.java`
+
+---
+### Prompt Content (Verbatim)
+
+```text
+System Role: Senior Full Stack Engineer
+
+Task: Fix the bug where creating a department fails silently because the frontend bypasses HTML form validation and the backend accepts empty fields.
+
+Requirements:
+- Add strict validation constraints to backend DTOs (e.g., `@NotBlank`).
+- Ensure frontend `onSubmit` handlers correctly trigger validation before hitting the Spring Boot endpoints.
+- Ensure all department creation logic flows seamlessly from client to database.
+```

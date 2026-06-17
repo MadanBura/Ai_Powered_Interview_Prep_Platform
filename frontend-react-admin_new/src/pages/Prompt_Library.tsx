@@ -23,15 +23,16 @@ export default function Prompt_Library() {
   const [formData, setFormData] = useState<AiPromptRequestDto>({
     name: '',
     persona: 'Executive Interviewer',
+    status: 'Active',
   });
 
   const handleOpenModal = (prompt?: AiPrompt) => {
     if (prompt) {
       setEditingPrompt(prompt);
-      setFormData({ name: prompt.name, persona: prompt.persona });
+      setFormData({ name: prompt.name, persona: prompt.persona, status: prompt.status });
     } else {
       setEditingPrompt(null);
-      setFormData({ name: '', persona: 'Executive Interviewer' });
+      setFormData({ name: '', persona: 'Executive Interviewer', status: 'Active' });
     }
     setIsModalOpen(true);
   };
