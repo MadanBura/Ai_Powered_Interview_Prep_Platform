@@ -1,0 +1,62 @@
+# Native Android Candidate Application UI - Implementation Plan
+
+This plan outlines the phase-by-phase implementation of the Android application for the AI-Powered Interview Preparation & Assessment Platform, strictly adhering to the Material Design 3 guidelines and Jetpack Compose MVVM architecture.
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Missing Tool Access (Stitch MCP)**
+> The instructions mention using `list_screens(moduleId)` and `get_screen(screenId)` via the **Stitch MCP Design System**. However, I currently **do not** have access to the Stitch MCP server or these specific tools in my environment. 
+> 
+> **How would you like to proceed?**
+> 1. You can configure/attach the Stitch MCP server to my environment so I can call those tools.
+> 2. Alternatively, you can paste the JSON/Text outputs of those screen definitions directly into the chat for me to use as the source of truth.
+
+## Proposed Changes
+
+We will generate the Android codebase using the requested folder structure:
+`app/src/main/java/com/interview/platform/ui/screens/[module_name]/[screen_name]/`
+
+Each screen will be fully provisioned with:
+- `[ScreenName]UiState.kt` (Modeling loading, empty, error, and success states)
+- `[ScreenName]ViewModel.kt` (StateFlow management and Hilt injection)
+- `[ScreenName]Screen.kt` (Compose UI adhering to Material 3 tokens)
+
+### Phase 1: Authentication & Profile
+**Modules**: MOD-01, MOD-02
+- `SplashScreen`, `WelcomeScreen`, `LoginScreen`, `OtpVerificationScreen`, `PermissionsScreen`, `ProfileScreen`, `EditProfileScreen`.
+
+### Phase 2: Interview Configuration
+**Modules**: MOD-03, MOD-04, MOD-05, MOD-09
+- `HomeDashboardScreen`, `DepartmentSelectionScreen`, `TechnologySelectionScreen`, `ExperienceSelectionScreen`, `QuestionCountSelectionScreen`, `InterviewSummaryScreen`.
+
+### Phase 3: Mock Interview
+**Modules**: MOD-10, MOD-11, MOD-12, MOD-13
+- `InterviewSessionScreen`, `VoiceRecordingScreen`, `AudioReviewScreen`, `SpeechToTextScreen`, `QuestionSubmittedScreen`, `InterviewCompletedScreen`.
+
+### Phase 4: Evaluation & Feedback
+**Modules**: MOD-14, MOD-15, MOD-16
+- `ResultsDashboardScreen`, `DetailedEvaluationScreen`, `QuestionWiseAnalysisScreen`, `StrengthAnalysisScreen`, `WeaknessAnalysisScreen`, `AiFeedbackReportScreen`.
+
+### Phase 5: Recommendations
+**Modules**: MOD-19
+- `LearningRecommendationsScreen`, `InterviewRoadmapScreen`, `RecommendedTechnologiesScreen`, `PracticePlanScreen`.
+
+### Phase 6: History & Analytics
+**Modules**: MOD-17, MOD-18, MOD-20
+- `InterviewHistoryScreen`, `PerformanceAnalyticsScreen`, `AchievementsScreen`.
+
+## UI/UX Design Theme Implementation
+- **Colors**: Primary (`#16A34A`), Secondary (`#475569`), Background (`#F8FAFC`), Surface (`#FFFFFF`), Success (`#22C55E`), Warning (`#F59E0B`), Error (`#DC2626`).
+- **Typography**: Inter (Google Fonts via Compose Downloadable Fonts).
+- **Accessibility**: Enforced 48dp minimum touch targets, proper `contentDescription` on all interactive elements, and Compose `semantics`.
+
+## Verification Plan
+
+### Automated Compilation
+- I will scaffold a generic Android application structure (if not already present) via `build.gradle.kts` with Compose dependencies.
+- Ensure all Kotlin files compile successfully.
+- Verify Navigation Compose graph routing works locally.
+
+### Manual Verification
+- You can pull the code and build it in Android Studio to verify the Previews and test the actual UI rendering.

@@ -1,0 +1,51 @@
+# Implementation Plan: Android API Integration Layer
+
+This plan outlines the approach to building the complete offline-first API integration layer for the Android Candidate Application, connecting the Jetpack Compose UI (generated previously) to the Spring Boot Backend using Retrofit, Room, Coroutines/Flow, and Hilt.
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Directory Restructuring & Gradle Setup**
+> You requested that `app` be moved inside `android-app` along with standard Gradle configurations. I will move the existing `app/` folder into an `android-app/` root directory and scaffold a fully functional multi-module Android project (including `build.gradle.kts`, `settings.gradle.kts`, and standard `gradlew` wrappers). Does this sound correct?
+
+> [!WARNING]
+> **API Schema Source of Truth**
+> The instructions mention generating Retrofit interfaces based on `docs/api/module-xx-api.md`. Since we previously successfully used the unified `doc/api-schema.md` to generate the backend and it contains all 27 modules, I plan to use `doc/api-schema.md` as the unified source of truth to auto-generate the Retrofit `@GET` / `@POST` functions. Do you approve?
+
+## Proposed Changes
+
+### 1. Project Restructuring & Base Configuration
+- Move the existing `app/` directory to `android-app/app/`.
+- Generate `android-app/build.gradle.kts` (Root) and `android-app/settings.gradle.kts`.
+- Generate `android-app/app/build.gradle.kts` with dependencies for Retrofit, OkHttp, Room, Hilt, Coroutines, DataStore, and Timber.
+- Generate global configuration models:
+  - `data/model/Result.kt` (Sealed class for Success, Error, Loading with `.asResult()` extension).
+  - `data/remote/AuthInterceptor.kt` (JWT injection, auto-refresh logic, SharedFlow logout).
+  - `data/remote/CorrelationIdInterceptor.kt`.
+  - `di/NetworkModule.kt` (Retrofit/OkHttp builder with timeouts).
+
+### 2. Module Processing Strategy (Phase-by-Phase)
+Because of the massive scale (20+ candidate modules), we will use an automated meta-generator script to scaffold the integration layers phase-by-phase. For each module, the generator will read the endpoints and automatically produce:
+
+- **DTOs (`data/remote/dto/`)**: Request and Response data classes annotated with `@JsonClass`.
+- **Domain Models (`domain/model/`)**: Clean Kotlin data classes.
+- **Mappers (`data/mapper/`)**: Extension functions mapping `Dto -> Entity` and `Entity -> Dto/Domain`.
+- **API Service (`data/remote/`)**: Retrofit interface matching the exact paths from the API Schema.
+- **Room DAO (`data/local/dao/`)**: Suspended CRUD operations with `@Query` and `Flow` returns.
+- **Data Sources (`data/source/`)**: `RemoteDataSource` and `LocalDataSource`.
+- **Repository (`domain/repository/`)**: Interface contracts.
+- **RepositoryImpl (`data/repository/`)**: The single source of truth implementation chaining `Remote -> Local -> Flow<Result<T>>` with offline caching.
+
+### 3. Execution Phases
+1. **Phase 1**: Authentication & User Profile (MOD-01, MOD-02)
+2. **Phase 2**: Interview Configuration (MOD-03, MOD-04, MOD-05, MOD-09)
+3. **Phase 3**: Interview Execution (MOD-10, MOD-11, MOD-12, MOD-13)
+4. **Phase 4**: Evaluation & Recommendation (MOD-14, MOD-15, MOD-16, MOD-19)
+5. **Phase 5**: Analytics & History (MOD-17, MOD-18, MOD-20)
+
+## Verification Plan
+### Automated Testing
+- After generation, we will execute `./gradlew build` inside `android-app/` to verify that Hilt dependency injection, Retrofit configurations, and Room schemas compile without errors.
+
+### Manual Verification
+- You can open the `android-app` folder directly in Android Studio. Gradle sync should succeed, and you will see the complete Clean Architecture layers implemented alongside the Compose UI.
